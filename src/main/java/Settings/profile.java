@@ -5,6 +5,9 @@ import java.awt.Font;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 /**
  *
@@ -113,5 +116,28 @@ public class profile extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    
+    public class DBConnection {
+
+    private static final String URL =
+            "jdbc:mysql://localhost:3306/ooponlineshopping"; // change DB name
+
+    private static final String USER = "root";
+    private static final String PASSWORD = ""; // XAMPP default is empty
+
+    public Connection getConnection() {
+        Connection conn = null;
+
+        try {
+            conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            JOptionPane.showMessageDialog(null, "Database connected successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Connection failed!", "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+
+        return conn;
+    }
+}
     
 }

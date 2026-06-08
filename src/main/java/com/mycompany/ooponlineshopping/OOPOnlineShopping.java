@@ -11,6 +11,10 @@ package com.mycompany.ooponlineshopping;
 public class OOPOnlineShopping {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        
+        Homep h = new Homep();
+        h.setVisible(true);
+        
+        
     }
 }

@@ -11,7 +11,7 @@ package com.mycompany.ooponlineshopping;
 public class OOPOnlineShopping {
 
     public static void main(String[] args) {
-        Header h = new Header();
+        Test h = new Test();
        h.setVisible(true);
     }
 }

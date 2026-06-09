@@ -1,243 +1,246 @@
 package Settings;
 
-import java.awt.Color;
-import java.awt.Font;
+import Dbcon.DBConnection;
+import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-/**
- *
- * @author Ron
- */
-
-//This class let's the user update or edit their profile
+import java.sql.*;
 
 public class profset extends JPanel implements ActionListener {
 
     private JPanel top, uptpnl;
-    private JLabel title, uptitle;
-    private JLabel uname, uname1, name, name1, email, email1;
-    private JLabel pnum, pnum1, gen, gen1, birth, birth1;
-    private JLabel upuname, upname, upemail, uppnum, upgen, upbirth;
+    private JLabel title;
+
+    private JLabel uname1, name1, email1, pnum1, gen1, birth1;
+
     private JTextField txtuser, txtname, txtemail, txtpnum;
     private JButton save, edit, exit;
 
-    JComboBox<Integer> cmbday, cmbyear;
-    JComboBox<String> cmbgen, cmbmonth;
+    private JComboBox<Integer> cmbday, cmbyear;
+    private JComboBox<String> cmbgen, cmbmonth;
 
-    private final String[] months;
-    private final String[] gender;
+    private final String[] months = {
+        "January","February","March","April","May","June",
+        "July","August","September","October","November","December"
+    };
+
+    private final String[] gender = {"Male","Female","Other"};
 
     private final Integer[] years = new Integer[97];
     private final Integer[] days = new Integer[31];
 
-    public profset() {
+    private int userId;
 
-        this.months = new String[]{
-            "January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December"
-        };
+    public profset(int userId) {
+        Font labelFont = new Font("Segoe UI", Font.BOLD, 17);
+        this.userId = userId;
 
-        this.gender = new String[]{"Male", "Female", "Other"};
-
-        for (int i = 1911; i <= 2007; i++) {
-            this.years[i - 1911] = i;
-        }
-
-        for (int i = 1; i <= 31; i++) {
-            this.days[i - 1] = i;
-        }
+        for (int i = 0; i < 97; i++) years[i] = 1911 + i;
+        for (int i = 0; i < 31; i++) days[i] = i + 1;
 
         setLayout(null);
-        setBackground(new Color(245, 245, 245));
-        setBounds(0, 0, 1550, 790);
+        setBackground(new Color(245,245,245));
+        setBounds(0,0,1550,790);
 
         Color PALATINATE = new Color(104, 40, 96);
-        Font labelFont = new Font("Segoe UI", Font.BOLD, 17);
-        Font valueFont = new Font("Segoe UI", Font.PLAIN, 17);
-        
+
         title = new JLabel("Profile");
-        title.setBounds(80, 30, 300, 40);
+        title.setBounds(80,30,300,40);
         title.setFont(new Font("Segoe UI", Font.BOLD, 28));
         add(title);
-        
+
         top = new JPanel(null);
-        top.setBounds(80, 90, 1300, 550);
+        top.setBounds(80,90,1300,550);
         top.setBackground(Color.WHITE);
-        top.setBorder(BorderFactory.createLineBorder(new Color(220, 220, 220), 1));
+        top.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
         add(top);
 
-        int labelX = 220;
-        int valueX = 500;
-        int startY = 80;
-        int gap = 65;
+        int labelX = 220, valueX = 500, startY = 80, gap = 65;
 
-        // LABELS
-        uname = new JLabel("Username:");
-        uname.setBounds(labelX, startY, 200, 30);
+        JLabel uname = new JLabel("Username:");
+        uname.setBounds(labelX,startY,200,30);
         uname.setFont(labelFont);
         top.add(uname);
 
-        name = new JLabel("Full Name:");
-        name.setBounds(labelX, startY + gap, 200, 30);
+        JLabel name = new JLabel("Full Name:");
+        name.setBounds(labelX,startY+gap,200,30);
         name.setFont(labelFont);
         top.add(name);
 
-        email = new JLabel("Email:");
-        email.setBounds(labelX, startY + (gap * 2), 200, 30);
+        JLabel email = new JLabel("Email:");
+        email.setBounds(labelX,startY+gap*2,200,30);
         email.setFont(labelFont);
         top.add(email);
 
-        pnum = new JLabel("Phone Number:");
-        pnum.setBounds(labelX, startY + (gap * 3), 200, 30);
+        JLabel pnum = new JLabel("Phone:");
+        pnum.setBounds(labelX,startY+gap*3,200,30);
         pnum.setFont(labelFont);
         top.add(pnum);
 
-        gen = new JLabel("Gender:");
-        gen.setBounds(labelX, startY + (gap * 4), 200, 30);
+        JLabel gen = new JLabel("Gender:");
+        gen.setBounds(labelX,startY+gap*4,200,30);
         gen.setFont(labelFont);
         top.add(gen);
 
-        birth = new JLabel("Birth Date:");
-        birth.setBounds(labelX, startY + (gap * 5), 200, 30);
+        JLabel birth = new JLabel("Birth Date:");
+        birth.setBounds(labelX,startY+gap*5,200,30);
         birth.setFont(labelFont);
         top.add(birth);
 
-        // VALUES
-        uname1 = new JLabel("ADMIN123");
-        uname1.setBounds(valueX, startY, 400, 30);
-        uname1.setFont(valueFont);
+        uname1 = new JLabel();
+        name1 = new JLabel();
+        email1 = new JLabel();
+        pnum1 = new JLabel();
+        gen1 = new JLabel();
+        birth1 = new JLabel();
+
+        uname1.setBounds(valueX,startY,400,30);
+        name1.setBounds(valueX,startY+gap,400,30);
+        email1.setBounds(valueX,startY+gap*2,400,30);
+        pnum1.setBounds(valueX,startY+gap*3,400,30);
+        gen1.setBounds(valueX,startY+gap*4,400,30);
+        birth1.setBounds(valueX,startY+gap*5,400,30);
+
         top.add(uname1);
-
-        name1 = new JLabel("ADMIN A. ADMIN");
-        name1.setBounds(valueX, startY + gap, 400, 30);
-        name1.setFont(valueFont);
         top.add(name1);
-
-        email1 = new JLabel("ADMIN@gmail.com");
-        email1.setBounds(valueX, startY + (gap * 2), 400, 30);
-        email1.setFont(valueFont);
         top.add(email1);
-
-        pnum1 = new JLabel("09912345678");
-        pnum1.setBounds(valueX, startY + (gap * 3), 400, 30);
-        pnum1.setFont(valueFont);
         top.add(pnum1);
-
-        gen1 = new JLabel("Male");
-        gen1.setBounds(valueX, startY + (gap * 4), 400, 30);
-        gen1.setFont(valueFont);
         top.add(gen1);
-
-        birth1 = new JLabel("January 1, 2000");
-        birth1.setBounds(valueX, startY + (gap * 5), 400, 30);
-        birth1.setFont(valueFont);
         top.add(birth1);
 
-        // UPDATE BUTTON
         edit = new JButton("Update Profile");
-        edit.setBounds(520, 470, 220, 45);
+        edit.setBounds(520,470,220,45);
         edit.setBackground(PALATINATE);
         edit.setForeground(Color.WHITE);
-        edit.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        edit.setFocusPainted(false);
         top.add(edit);
 
-        // UPDATE PANEL
+        // EDIT PANEL
         uptpnl = new JPanel(null);
-        uptpnl.setBounds(420, 100, 700, 560);
+        uptpnl.setBounds(420,100,700,560);
         uptpnl.setBackground(Color.WHITE);
-        uptpnl.setBorder(BorderFactory.createLineBorder(new Color(220, 220, 220), 1));
+        uptpnl.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
         uptpnl.setVisible(false);
         add(uptpnl);
 
-        uptitle = new JLabel("Update Profile");
-        uptitle.setBounds(220, 25, 300, 40);
+        JLabel uptitle = new JLabel("Update Profile");
+        uptitle.setBounds(220,25,300,40);
         uptitle.setFont(new Font("Segoe UI", Font.BOLD, 28));
         uptpnl.add(uptitle);
-        
-        upuname = new JLabel("Username:");
-        upuname.setBounds(70, 100, 150, 30);
-        upuname.setFont(labelFont);
-        uptpnl.add(upuname);
-        
-        upname = new JLabel("Full Name:");
-        upname.setBounds(70, 200, 150, 30);
-        upname.setFont(labelFont);
-        uptpnl.add(upname);
-        
-        upemail = new JLabel("Email:");
-        upemail.setBounds(70, 300, 150, 30);
-        upemail.setFont(labelFont);
-        uptpnl.add(upemail);
-        
-        uppnum = new JLabel("Phone Number:");
-        uppnum.setBounds(70, 400, 150, 30);
-        uppnum.setFont(labelFont);
-        uptpnl.add(uppnum);
-        
-        upgen = new JLabel("Gender:");
-        upgen.setBounds(70, 500, 150, 30);
-        upgen.setFont(labelFont);
-        uptpnl.add(upgen);
-        
-        upbirth = new JLabel("Birth Date:");
-        upbirth.setBounds(70, 600, 150, 30);
-        upbirth.setFont(labelFont);
-        uptpnl.add(upbirth);
 
         txtuser = new JTextField();
-        txtuser.setBounds(240, 100, 350, 35);
-        uptpnl.add(txtuser);
-
         txtname = new JTextField();
-        txtname.setBounds(240, 160, 350, 35);
-        uptpnl.add(txtname);
-
         txtemail = new JTextField();
-        txtemail.setBounds(240, 220, 350, 35);
-        uptpnl.add(txtemail);
-
         txtpnum = new JTextField();
-        txtpnum.setBounds(240, 280, 350, 35);
+
+        txtuser.setBounds(240,100,350,35);
+        txtname.setBounds(240,160,350,35);
+        txtemail.setBounds(240,220,350,35);
+        txtpnum.setBounds(240,280,350,35);
+
+        uptpnl.add(txtuser);
+        uptpnl.add(txtname);
+        uptpnl.add(txtemail);
         uptpnl.add(txtpnum);
 
         cmbgen = new JComboBox<>(gender);
-        cmbgen.setBounds(240, 340, 180, 35);
+        cmbgen.setBounds(240,340,180,35);
         uptpnl.add(cmbgen);
 
         cmbmonth = new JComboBox<>(months);
-        cmbmonth.setBounds(240, 400, 130, 35);
+        cmbmonth.setBounds(240,400,130,35);
         uptpnl.add(cmbmonth);
 
         cmbday = new JComboBox<>(days);
-        cmbday.setBounds(380, 400, 80, 35);
+        cmbday.setBounds(380,400,80,35);
         uptpnl.add(cmbday);
 
         cmbyear = new JComboBox<>(years);
-        cmbyear.setBounds(470, 400, 120, 35);
+        cmbyear.setBounds(470,400,120,35);
         uptpnl.add(cmbyear);
-        
+
         save = new JButton("Save");
-        save.setBounds(180, 470, 140, 45);
+        exit = new JButton("Close");
+
+        save.setBounds(180,470,140,45);
+        exit.setBounds(380,470,140,45);
+
         save.setBackground(PALATINATE);
         save.setForeground(Color.WHITE);
-        save.setFont(new Font("Segoe UI", Font.BOLD, 15));
-        save.setFocusPainted(false);
-        uptpnl.add(save);
-        
-        exit = new JButton("Close");
-        exit.setBounds(380, 470, 140, 45);
         exit.setBackground(Color.DARK_GRAY);
         exit.setForeground(Color.WHITE);
-        exit.setFont(new Font("Segoe UI", Font.BOLD, 15));
-        exit.setFocusPainted(false);
+
+        uptpnl.add(save);
         uptpnl.add(exit);
-        
+
         edit.addActionListener(this);
         save.addActionListener(this);
         exit.addActionListener(this);
+
+        loadProfile(); // 🔥 IMPORTANT
+    }
+
+    // ================= LOAD PROFILE =================
+    private void loadProfile() {
+        try (Connection con = DBConnection.getConnection()) {
+            Font valueFont = new Font("Segoe UI", Font.PLAIN, 17);
+
+            String sql = "SELECT * FROM users WHERE user_id=?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, userId);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+
+                uname1.setText(rs.getString("username"));
+                name1.setText(rs.getString("fname"));
+                email1.setText(rs.getString("email"));
+                pnum1.setText(rs.getString("pnum"));
+                gen1.setText(rs.getString("gender"));
+                birth1.setText(rs.getString("bdates"));
+                
+                uname1.setFont(valueFont);
+                name1.setFont(valueFont);
+                email1.setFont(valueFont);
+                pnum1.setFont(valueFont);
+                gen1.setFont(valueFont);
+                birth1.setFont(valueFont);
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    // ================= UPDATE PROFILE =================
+    private void updateProfile() {
+
+        String birth = cmbmonth.getSelectedItem() + " "
+                + cmbday.getSelectedItem() + ", "
+                + cmbyear.getSelectedItem();
+
+        try (Connection con = DBConnection.getConnection()) {
+
+            String sql =
+                "UPDATE users SET username=?, fname=?, email=?, pnum=?, gender=?, bdates=? WHERE user_id=?";
+
+            PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setString(1, txtuser.getText());
+            ps.setString(2, txtname.getText());
+            ps.setString(3, txtemail.getText());
+            ps.setString(4, txtpnum.getText());
+            ps.setString(5, (String) cmbgen.getSelectedItem());
+            ps.setString(6, birth);
+            ps.setInt(7, userId);
+
+            ps.executeUpdate();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        loadProfile();
     }
 
     @Override
@@ -250,8 +253,8 @@ public class profset extends JPanel implements ActionListener {
             txtemail.setText(email1.getText());
             txtpnum.setText(pnum1.getText());
 
-            uptpnl.setVisible(true);
             top.setVisible(false);
+            uptpnl.setVisible(true);
 
         } else if (e.getSource() == exit) {
 
@@ -260,14 +263,8 @@ public class profset extends JPanel implements ActionListener {
 
         } else if (e.getSource() == save) {
 
-            String bday = cmbmonth.getSelectedItem()+" "+cmbday.getSelectedItem()+", "+ cmbyear.getSelectedItem();
-            
-            uname1.setText(txtuser.getText());
-            name1.setText(txtname.getText());
-            email1.setText(txtemail.getText());
-            pnum1.setText(txtpnum.getText());
-            gen1.setText((String) cmbgen.getSelectedItem());
-            birth1.setText(bday);
+            updateProfile();
+
             uptpnl.setVisible(false);
             top.setVisible(true);
         }

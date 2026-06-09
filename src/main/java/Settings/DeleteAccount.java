@@ -1,10 +1,14 @@
 package Settings;
 
+import Dbcon.DBConnection;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
  *
@@ -19,101 +23,150 @@ public class DeleteAccount extends JPanel implements ActionListener {
     private JLabel title;
     private JLabel uname, uname1, name, name1, email, email1;
     private JLabel pnum, pnum1, gen, gen1, birth, birth1;
+    private JButton delete;
+    private int userId;
     
-    DeleteAccount(){
+    DeleteAccount(int userId) {
+        Font labelFont = new Font("Segoe UI", Font.BOLD, 17);
+        this.userId = userId;
 
         setLayout(null);
-        setBackground(new Color(245, 245, 245));
-        setBounds(0, 0, 1550, 790);
+        setBackground(new Color(245,245,245));
+        setBounds(0,0,1550,790);
 
         Color PALATINATE = new Color(104, 40, 96);
-        Font labelFont = new Font("Segoe UI", Font.BOLD, 17);
-        Font valueFont = new Font("Segoe UI", Font.PLAIN, 17);
-        
-        title = new JLabel("Account");
-        title.setBounds(80, 30, 300, 40);
+
+        title = new JLabel("Profile");
+        title.setBounds(80,30,300,40);
         title.setFont(new Font("Segoe UI", Font.BOLD, 28));
         add(title);
-        
+
         top = new JPanel(null);
-        top.setBounds(80, 90, 1300, 550);
+        top.setBounds(80,90,1300,550);
         top.setBackground(Color.WHITE);
-        top.setBorder(BorderFactory.createLineBorder(new Color(220, 220, 220), 1));
+        top.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
         add(top);
 
-        
+        int labelX = 220, valueX = 500, startY = 80, gap = 65;
 
-        int labelX = 220;
-        int valueX = 500;
-        int startY = 80;
-        int gap = 65;
-        uname = new JLabel("Username:");
-        uname.setBounds(labelX, startY, 200, 30);
+        JLabel uname = new JLabel("Username:");
+        uname.setBounds(labelX,startY,200,30);
         uname.setFont(labelFont);
         top.add(uname);
 
-        name = new JLabel("Full Name:");
-        name.setBounds(labelX, startY + gap, 200, 30);
+        JLabel name = new JLabel("Full Name:");
+        name.setBounds(labelX,startY+gap,200,30);
         name.setFont(labelFont);
         top.add(name);
 
-        email = new JLabel("Email:");
-        email.setBounds(labelX, startY + (gap * 2), 200, 30);
+        JLabel email = new JLabel("Email:");
+        email.setBounds(labelX,startY+gap*2,200,30);
         email.setFont(labelFont);
         top.add(email);
 
-        pnum = new JLabel("Phone Number:");
-        pnum.setBounds(labelX, startY + (gap * 3), 200, 30);
+        JLabel pnum = new JLabel("Phone:");
+        pnum.setBounds(labelX,startY+gap*3,200,30);
         pnum.setFont(labelFont);
         top.add(pnum);
 
-        gen = new JLabel("Gender:");
-        gen.setBounds(labelX, startY + (gap * 4), 200, 30);
+        JLabel gen = new JLabel("Gender:");
+        gen.setBounds(labelX,startY+gap*4,200,30);
         gen.setFont(labelFont);
         top.add(gen);
 
-        birth = new JLabel("Birth Date:");
-        birth.setBounds(labelX, startY + (gap * 5), 200, 30);
+        JLabel birth = new JLabel("Birth Date:");
+        birth.setBounds(labelX,startY+gap*5,200,30);
         birth.setFont(labelFont);
         top.add(birth);
 
-        // VALUES
-        uname1 = new JLabel("ADMIN123");
-        uname1.setBounds(valueX, startY, 400, 30);
-        uname1.setFont(valueFont);
+        uname1 = new JLabel();
+        name1 = new JLabel();
+        email1 = new JLabel();
+        pnum1 = new JLabel();
+        gen1 = new JLabel();
+        birth1 = new JLabel();
+
+        uname1.setBounds(valueX,startY,400,30);
+        name1.setBounds(valueX,startY+gap,400,30);
+        email1.setBounds(valueX,startY+gap*2,400,30);
+        pnum1.setBounds(valueX,startY+gap*3,400,30);
+        gen1.setBounds(valueX,startY+gap*4,400,30);
+        birth1.setBounds(valueX,startY+gap*5,400,30);
+
         top.add(uname1);
-
-        name1 = new JLabel("ADMIN A. ADMIN");
-        name1.setBounds(valueX, startY + gap, 400, 30);
-        name1.setFont(valueFont);
         top.add(name1);
-
-        email1 = new JLabel("ADMIN@gmail.com");
-        email1.setBounds(valueX, startY + (gap * 2), 400, 30);
-        email1.setFont(valueFont);
         top.add(email1);
-
-        pnum1 = new JLabel("09912345678");
-        pnum1.setBounds(valueX, startY + (gap * 3), 400, 30);
-        pnum1.setFont(valueFont);
         top.add(pnum1);
-
-        gen1 = new JLabel("Male");
-        gen1.setBounds(valueX, startY + (gap * 4), 400, 30);
-        gen1.setFont(valueFont);
         top.add(gen1);
-
-        birth1 = new JLabel("January 1, 2000");
-        birth1.setBounds(valueX, startY + (gap * 5), 400, 30);
-        birth1.setFont(valueFont);
         top.add(birth1);
-
         
+        delete = new JButton("Delete Profile");
+        delete.setBounds(520,470,220,45);
+        delete.setBackground(PALATINATE);
+        delete.setForeground(Color.WHITE);
+        top.add(delete);
+        
+        delete.addActionListener(this);
+        loadProfile();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
+        if(e.getSource() == delete){
+            deleteAccount(userId);
+        }
     }
+    
+    private void loadProfile() {
+        try (Connection con = DBConnection.getConnection()) {
+            Font valueFont = new Font("Segoe UI", Font.PLAIN, 17);
+
+            String sql = "SELECT * FROM users WHERE user_id=?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, userId);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+
+                uname1.setText(rs.getString("username"));
+                name1.setText(rs.getString("fname"));
+                email1.setText(rs.getString("email"));
+                pnum1.setText(rs.getString("pnum"));
+                gen1.setText(rs.getString("gender"));
+                birth1.setText(rs.getString("bdates"));
+                
+                uname1.setFont(valueFont);
+                name1.setFont(valueFont);
+                email1.setFont(valueFont);
+                pnum1.setFont(valueFont);
+                gen1.setFont(valueFont);
+                birth1.setFont(valueFont);
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public static void deleteAccount(int userId) {
+
+            try {
+                Connection conn = DBConnection.getConnection();
+
+                String sql = "DELETE FROM users WHERE user_id=?";
+
+                PreparedStatement pst = conn.prepareStatement(sql);
+
+                pst.setInt(1, userId);
+
+                pst.executeUpdate();
+
+                conn.close();
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
     
 }

@@ -19,9 +19,10 @@ public class Settings extends JFrame implements ActionListener {
     private JButton btnhome, btnsearch, btnsettings, btnorders, btncart;
     private JTextField searchBar;
     private JPanel header;
+    private int userId;
 
-    public Settings() {
-        
+    public Settings(int userId) {
+        this.userId = userId;
         setSize(1565, 800);
         setTitle("Settings");
         setLayout(null);
@@ -67,7 +68,7 @@ public class Settings extends JFrame implements ActionListener {
         btncart.setFont(navFont);
         header.add(btncart);
         
-        accsetting settingsPanel = new accsetting();
+        accsetting settingsPanel = new accsetting(userId);
         settingsPanel.setBounds(0, 60, 1400, 740);
         add(settingsPanel);
         
@@ -84,7 +85,7 @@ public class Settings extends JFrame implements ActionListener {
 
         if (e.getSource() == btnhome) {
             dispose();
-            new Header().setVisible(true);
+            new Header(userId).setVisible(true);
         }else if (e.getSource() == btnorders) {
             dispose();
             new Orders().setVisible(true);

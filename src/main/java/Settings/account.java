@@ -16,9 +16,10 @@ public class account extends JPanel implements ActionListener {
     private JPanel sidebar, content;
 
     private JButton prof, pass, acc;
+    private int userId;
 
-    account() {
-
+    account(int userId) {
+        this.userId = userId;
         setLayout(null);
         setBackground(new Color(245, 245, 245));
         setBounds(0, 0, 1550, 790);
@@ -77,7 +78,7 @@ public class account extends JPanel implements ActionListener {
         title.setFont(new Font("Segoe UI", Font.BOLD, 28));
         content.add(title);
         
-        turnPage(new profset());
+        turnPage(new profset(userId));
         
         prof.addActionListener(this);
         pass.addActionListener(this);
@@ -88,11 +89,11 @@ public class account extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == prof) {
-            turnPage(new profset());
+            turnPage(new profset(userId));
         }else if (e.getSource() == pass) {
-            turnPage(new ChangePassword());
+            turnPage(new ChangePassword(userId));
         }else if (e.getSource() == acc) {
-            turnPage(new DeleteAccount());
+            turnPage(new DeleteAccount(userId));
         }
     }
     

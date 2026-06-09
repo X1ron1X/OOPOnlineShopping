@@ -70,8 +70,8 @@ public class Cart extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == btnsettings){
         dispose();
-        Settings s = new Settings();
-        s.setVisible(true);
+//        Settings s = new Settings();
+//        s.setVisible(true);
         }
          else if(e.getSource() == btnorders){
         dispose();
@@ -80,8 +80,8 @@ public class Cart extends JFrame implements ActionListener{
         }
         else if(e.getSource() == btnhome){
         dispose();
-        Header h = new Header();
-        h.setVisible(true);
+//        Header h = new Header();
+//        h.setVisible(true);
         }
         }
     }

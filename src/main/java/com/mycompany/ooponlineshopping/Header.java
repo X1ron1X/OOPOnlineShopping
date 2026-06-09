@@ -19,8 +19,10 @@ public class Header extends JFrame implements ActionListener{
     private JButton btnhome,btnsearch,btnsettings,btnorders,btncart;
     private JTextField searchBar;
     private JPanel header;
+    private int userId;
     
-    Header(){
+    Header(int userId) {
+        this.userId = userId;
         setSize(1010,500);
         setTitle("Header");
         setLayout(null);
@@ -70,7 +72,7 @@ public class Header extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == btnsettings){
         dispose();
-        Settings s = new Settings();
+        Settings s = new Settings(userId);
         s.setVisible(true);
         }
          else if(e.getSource() == btnorders){

@@ -16,9 +16,10 @@ public class accsetting extends JPanel implements ActionListener {
 
     private JButton btnprof, btnacc, btnadd, btnpay, btnlog;
     private JPanel pnlhead, pnlside, pnlwin;
+    private int userId;
     
-    public accsetting() {
-
+    public accsetting(int userId) {
+    this.userId = userId;
         setBounds(0, 50, 1550, 850);
         setLayout(null);
         
@@ -92,7 +93,7 @@ public class accsetting extends JPanel implements ActionListener {
         pnlwin.setBackground(new Color(235, 235, 235));
         add(pnlwin);
         
-        turnPage(new profile());
+        turnPage(new profile(userId));
         
         btnprof.addActionListener(this);
         btnacc.addActionListener(this);
@@ -105,13 +106,13 @@ public class accsetting extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource() == btnprof) {
-            turnPage(new profile());
+            turnPage(new profile(userId));
         }else if (e.getSource() == btnacc) {
-            turnPage(new account());
+            turnPage(new account(userId));
         }else if (e.getSource() == btnadd) {
-            turnPage(new Address());
+            turnPage(new Address(userId));
         }else if (e.getSource() == btnpay) {
-            turnPage(new Payments());
+            turnPage(new Payments(userId));
         }
 
     }

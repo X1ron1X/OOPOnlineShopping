@@ -70,13 +70,13 @@ public class Orders extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == btnsettings){
         dispose();
-        Settings s = new Settings();
-        s.setVisible(true);
+//        Settings s = new Settings();
+//        s.setVisible(true);
         }
         else if(e.getSource() == btnhome){
         dispose();
-        Header h = new Header();
-        h.setVisible(true);
+//        Header h = new Header();
+//        h.setVisible(true);
         }
          else if(e.getSource() == btncart){
         dispose();

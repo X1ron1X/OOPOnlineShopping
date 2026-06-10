@@ -4,6 +4,8 @@
 
 package com.mycompany.ooponlineshopping;
 
+import LogReg.MainFrame;
+
 /**
  *
  * @author Ron
@@ -11,7 +13,7 @@ package com.mycompany.ooponlineshopping;
 public class OOPOnlineShopping {
 
     public static void main(String[] args) {
-        Test h = new Test();
+       MainFrame h = new MainFrame();
        h.setVisible(true);
     }
 }

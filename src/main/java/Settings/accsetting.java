@@ -1,5 +1,7 @@
 package Settings;
 
+import LogReg.MainFrame;
+import com.mycompany.ooponlineshopping.Settings;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.*;
@@ -113,6 +115,11 @@ public class accsetting extends JPanel implements ActionListener {
             turnPage(new Address(userId));
         }else if (e.getSource() == btnpay) {
             turnPage(new Payments(userId));
+        }else if (e.getSource() == btnlog) {
+            Window window = SwingUtilities.getWindowAncestor(this);
+            window.dispose();
+            MainFrame h = new MainFrame();
+            h.setVisible(true);
         }
 
     }

@@ -1,8 +1,10 @@
 package Settings;
 
 import Dbcon.DBConnection;
+import LogReg.MainFrame;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Window;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -114,6 +116,10 @@ public class DeleteAccount extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == delete){
             deleteAccount(userId);
+            Window window = SwingUtilities.getWindowAncestor(this);
+            window.dispose();
+            MainFrame h = new MainFrame();
+            h.setVisible(true);
         }
     }
     

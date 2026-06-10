@@ -24,7 +24,7 @@ public class Header extends JFrame implements ActionListener{
     private JPanel header;
     private AddToCart cartPanel;
     
-    Header(){
+   public Header(){
         setSize(1010,600);
         setTitle("Header");
         setLayout(null);

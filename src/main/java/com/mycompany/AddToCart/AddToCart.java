@@ -1,11 +1,19 @@
-package com.mycompany.AddToCart;
+ package com.mycompany.AddToCart;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.*;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 
+/**
+ *
+ * @author Khyran Zarsuela
+ */
 public class AddToCart extends JPanel implements ActionListener {
 
     private ArrayList<CartItem> cartItems;
@@ -36,7 +44,7 @@ public class AddToCart extends JPanel implements ActionListener {
     private double total;
 
     public AddToCart() {
-
+      
         setSize(1000,500);
         setLayout(null);
 
@@ -50,6 +58,7 @@ public class AddToCart extends JPanel implements ActionListener {
         header.setBounds(0,0,1000,50);
         header.setBackground(Color.white);
         add(header);
+        
 
         emptyLabel = new JLabel("No products in cart");
         emptyLabel.setBounds(200,200,200,30);
@@ -60,32 +69,8 @@ public class AddToCart extends JPanel implements ActionListener {
         leftPanel.setBackground(Color.white);
         leftPanel.setLayout(null);
         add(leftPanel);
-
-        cartContainer = new JPanel();
-        cartContainer.setLayout(null);
-        cartContainer.setBackground(Color.white);
-
-        scrollPane = new JScrollPane(cartContainer);
-        scrollPane.setBounds(0,0,610,450);
-
-        leftPanel.add(scrollPane);
-
-        checkPanel = new JPanel();
-        checkPanel.setBounds(610,350,450,150);
-        checkPanel.setBackground(Color.decode("#1A585B"));
-        add(checkPanel);
-
-        check = new JPanel();
-        check.setBounds(610,50,400,450);
-        check.setBackground(Color.decode("#23777B"));
-        add(check);
-
-        totallb = new JLabel("Total of Items:");
-        totallb.setBounds(620,60,150,100);
-        totallb.setForeground(Color.white);
-        add(totallb);
-
-        totaltxt = new JLabel("0");
+        
+          totaltxt = new JLabel("0");
         totaltxt.setBounds(900,60,100,100);
         totaltxt.setForeground(Color.white);
         add(totaltxt);
@@ -122,6 +107,62 @@ public class AddToCart extends JPanel implements ActionListener {
         checkOut.setForeground(Color.black);
         add(checkOut);
 
+        cartContainer = new JPanel();
+        cartContainer.setLayout(null);
+        cartContainer.setBackground(Color.white);
+
+        scrollPane = new JScrollPane(cartContainer);
+        scrollPane.setBounds(0,0,610,450);
+
+        leftPanel.add(scrollPane);
+
+        
+        totallb = new JLabel("Subtotal:");
+        totallb.setBounds(620,60,150,100);
+        totallb.setForeground(Color.white);
+        add(totallb);
+
+        totaltxt = new JLabel("P 0.00");
+        totaltxt.setBounds(820,60,150,100);
+        totaltxt.setForeground(Color.white);
+        add(totaltxt);
+
+        lb = new JLabel("Discount (10%):");
+        lb.setBounds(620,100,150,100);
+        lb.setForeground(Color.white);
+        add(lb);
+
+        lblb = new JLabel("P 0.00");
+        lblb.setBounds(820,100,150,100);
+        lblb.setForeground(Color.white);
+        add(lblb);
+
+        overall = new JLabel("Total:");
+        overall.setBounds(620,325,100,100);
+        overall.setForeground(Color.white);
+        add(overall);
+
+        oprice = new JLabel("P 0.00");
+        oprice.setBounds(820,325,150,100);
+        oprice.setForeground(Color.white);
+        add(oprice);
+        checkPanel = new JPanel();
+        checkPanel.setBounds(610,350,450,150);
+        checkPanel.setBackground(Color.decode("#1A585B"));
+        add(checkPanel);
+
+        check = new JPanel();
+        check.setBounds(610,50,400,450);
+        check.setBackground(Color.decode("#23777B"));
+        add(check);
+
+        totallb = new JLabel("Total of Items:");
+        totallb.setBounds(620,60,150,100);
+        totallb.setForeground(Color.white);
+        add(totallb);
+
+      
+
         clearCart.addActionListener(this);
         checkOut.addActionListener(this);
 
@@ -133,15 +174,11 @@ public class AddToCart extends JPanel implements ActionListener {
 
             if(item.getProduct().getProductId()
                     == product.getProductId()){
-
                 item.increaseQuantity();
-
                 refreshCart();
-
                 return;
             }
         }
-
         cartItems.add(
                 new CartItem(product)
         );
@@ -150,20 +187,15 @@ public class AddToCart extends JPanel implements ActionListener {
     }
 
     public void removeItem(CartItem item){
-
         cartItems.remove(item);
-
         refreshCart();
     }
 
     public ArrayList<CartItem> getCartItems(){
-
         return cartItems;
     }
         public void refreshCart(){
-
         cartContainer.removeAll();
-
         int y = 10;
 
         for(CartItem item : cartItems){
@@ -183,37 +215,38 @@ public class AddToCart extends JPanel implements ActionListener {
         cartContainer.revalidate();
         cartContainer.repaint();
     }
-            public void updateTotals(){
+     public void updateTotals(){
 
-        total = 0;
+    total = 0;
 
-        int totalItems = 0;
+    int totalItems = 0;
 
-        for(CartItem item : cartItems){
+    for(CartItem item : cartItems){
 
-            total += item.getSubtotal();
-
-            totalItems += item.getQuantity();
-        }
-
-        double discount = total * 0.10;
-
-        double finalTotal =
-                total - discount;
-
-        totaltxt.setText(
-                String.valueOf(totalItems)
-        );
-
-        oprice.setText(
-                "P " +
-                String.format(
-                        "%.2f",
-                        finalTotal
-                )
-        );
+        total += item.getSubtotal();
+        totalItems += item.getQuantity();
     }
-                @Override
+
+    double discount = total * 0.10;
+
+    double finalTotal = total - discount;
+
+    // Subtotal Price
+    totaltxt.setText(
+        "P " + String.format("%.2f", total)
+    );
+
+    // Discount Amount
+    lblb.setText(
+        "P -" + String.format("%.2f", discount)
+    );
+
+    // Final Price
+    oprice.setText(
+        "P " + String.format("%.2f", finalTotal)
+    );
+}
+    @Override
     public void actionPerformed(ActionEvent e) {
 
         if(e.getSource() == clearCart){
@@ -229,8 +262,12 @@ public class AddToCart extends JPanel implements ActionListener {
                 JOptionPane.showMessageDialog(this,"Cart is empty");
                 return;
             }
-           checkout c =new checkout(cartItems);
+           AddToCart a = new AddToCart();
+           a.setVisible(false);
+           
+           checkout c =new checkout(cartItems,1);
             c.setVisible(true);
+           
         }
     }
 }

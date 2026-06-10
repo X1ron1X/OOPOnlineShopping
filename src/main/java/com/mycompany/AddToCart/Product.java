@@ -4,6 +4,15 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+
+/**
+ *
+ * @author Khyran Zarsuela
+ */
 
 public class Product extends JPanel implements ActionListener {
 
@@ -31,17 +40,9 @@ public class Product extends JPanel implements ActionListener {
         setSize(400,300);
         setLayout(null);
 
-        //----------------------------------
-        // Product Objects
-        //----------------------------------
-
         bagProduct =new ProductItem(1,"Bag ni Luffy",1499,null);
 
         fruitProduct = new ProductItem(2,"Luffy's Devil Fruit Original",25000,null);
-
-        //----------------------------------
-        // Bag Product
-        //----------------------------------
 
         bagImage = new JPanel();
         bagImage.setBounds(20,20,80,80);
@@ -60,9 +61,6 @@ public class Product extends JPanel implements ActionListener {
         addBag.setBounds(120, 75,150,30);
         add(addBag);
 
-        //----------------------------------
-        // Fruit Product
-        //----------------------------------
 
         fruitImage = new JPanel();
         fruitImage.setBounds(20,140,80,80);
@@ -80,10 +78,6 @@ public class Product extends JPanel implements ActionListener {
         addFruit =new JButton("Add To Cart");
         addFruit.setBounds( 120,195,150,30);
         add(addFruit);
-
-        //----------------------------------
-        // Events
-        //----------------------------------
 
         addBag.addActionListener(this);
         addFruit.addActionListener(this);

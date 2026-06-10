@@ -4,7 +4,15 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 
+/**
+ *
+ * @author Khyran Zarsuela
+ */
 public class CartItemPanel extends JPanel implements ActionListener {
 
     private CartItem item;
@@ -19,8 +27,7 @@ public class CartItemPanel extends JPanel implements ActionListener {
     private JButton btnDelete;
     private JLabel lblImage;
 
-    public CartItemPanel(CartItem item,
-                         AddToCart cart) {
+    public CartItemPanel(CartItem item,AddToCart cart) {
 
         this.item = item;
         this.cart = cart;
@@ -47,15 +54,15 @@ public class CartItemPanel extends JPanel implements ActionListener {
         add(lblPrice);
 
         btnMinus =new JButton("-");
-        btnMinus.setBounds(90,40,50,30);
+        btnMinus.setBounds(200,40,50,30);
         add(btnMinus);
 
         lblQty =new JLabel(String.valueOf(item.getQuantity()));
-        lblQty.setBounds(90,45,40,20);
+        lblQty.setBounds(160,45,40,20);
         add(lblQty);
 
         btnPlus =new JButton("+");
-        btnPlus.setBounds(120,40,50,30);
+        btnPlus.setBounds(90,40,50,30);
         add(btnPlus);
 
         btnDelete =new JButton("Delete");

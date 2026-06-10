@@ -1,5 +1,6 @@
 package com.mycompany.AddToCart;
 
+import com.mycompany.ooponlineshopping.Header;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,30 +10,34 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.*;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 
+/**
+ *
+ * @author Khyran Zarsuela
+ */
 public class checkout extends JFrame implements ActionListener {
 
     private JLabel Ordersum,Subto,op,pd,ss,total,paymentm,cod,Address,cashG;
     private JLabel ns,nop,npd,nss,ntotal,cashGName;
-
     private JButton addC,placeO,address;
-
     private JPanel orderp,paymentp,header;
-
     private JRadioButton option1,option2,option3;
-
     private JTextField addtxt;
-
     private ArrayList<CartItem> cartItems;
+    private int userId=1;
 
-    public checkout(ArrayList<CartItem> cartItems){
+    public checkout(ArrayList<CartItem> cartItems, int userId){
 
         this.cartItems = cartItems;
+        this.userId = userId;
 
         setSize(1000,500);
         setLayout(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
         Ordersum = new JLabel("Order Summary");
         Ordersum.setBounds(40,10,150,20);
         add(Ordersum);
@@ -239,19 +244,19 @@ public class checkout extends JFrame implements ActionListener {
                 double shipping = 100;
                 double finalTotal = subtotal - discount + shipping;
 
-                String orderSql =
-                        "INSERT INTO orders " +
-                        "(payment_method,address,total_price) " +
-                        "VALUES (?,?,?)";
+                String orderSql ="INSERT INTO orders " +
+                        "(user_id,payment_method,address,total_price) " +
+                        "VALUES (?,?,?,?)";
 
                 PreparedStatement orderPst =
                         conn.prepareStatement(
                                 orderSql,
                                 Statement.RETURN_GENERATED_KEYS);
 
-                orderPst.setString(1,payment);
-                orderPst.setString(2,location);
-                orderPst.setDouble(3,finalTotal);
+                orderPst.setInt(1,userId);
+                orderPst.setString(2,payment);
+                orderPst.setString(3,location);
+                orderPst.setDouble(4,finalTotal);
 
                 orderPst.executeUpdate();
 
@@ -294,15 +299,15 @@ public class checkout extends JFrame implements ActionListener {
                     itemPst.executeUpdate();
                 }
 
-                JOptionPane.showMessageDialog(
-                        this,
-                        "Order placed successfully!");
-
+                JOptionPane.showMessageDialog(this,"Order placed successfully!");
+                 dispose();
                 itemPst.close();
                 orderPst.close();
                 conn.close();
 
-                dispose();
+               
+                Header h = new Header();
+                h.setVisible(true);
 
             }
             catch(Exception ex){

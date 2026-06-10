@@ -19,8 +19,10 @@ public class Settings extends JFrame implements ActionListener{
     private JButton btnhome,btnsearch,btnsettings,btnorders,btncart;
     private JTextField searchBar;
     private JPanel header;
+    private int userId;
     
-    Settings(){
+    public Settings(int userId) {
+        this.userId = userId;
         setSize(1010,500);
         setTitle("Header");
         setLayout(null);
@@ -70,17 +72,17 @@ public class Settings extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == btnhome){
         dispose();
-        //Header h = new Header();
-        //h.setVisible(true);
+        Header h = new Header(userId);
+        h.setVisible(true);
         }
          else if(e.getSource() == btnorders){
         dispose();
-        Orders o = new Orders();
+        Orders o = new Orders(userId);
         o.setVisible(true);
         }
          else if(e.getSource() == btncart){
         dispose();
-        Cart c = new Cart();
+        Cart c = new Cart(userId);
         c.setVisible(true);
         }
     }

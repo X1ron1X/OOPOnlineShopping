@@ -1,5 +1,11 @@
-LogReg\Account.class
-LogReg\Register.class
+com\mycompany\ooponlineshopping\Cart.class
+Dbcon\DBConnection.class
+com\mycompany\ooponlineshopping\Header.class
+com\mycompany\ooponlineshopping\Settings.class
 LogReg\Login.class
+com\mycompany\ooponlineshopping\OOPOnlineShopping.class
+LogReg\Register.class
+com\mycompany\ooponlineshopping\Orders.class
+LogReg\Account.class
 LogReg\MainFrame.class
 Menu.class

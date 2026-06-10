@@ -145,7 +145,7 @@ public class adminDispatch extends JFrame {
                 DatabaseManager.updateOrderStatus(selectedOrder, "Completed");
                 completedModel.addElement(transitModel.remove(idx));
             } else {
-                showWarning("Please select an item to mark as delivered.");
+                showWarning("Please select an item to be marked as delivered.");
             }
         });
 

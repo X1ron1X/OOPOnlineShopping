@@ -7,7 +7,7 @@ import java.sql.Statement;
 import javax.swing.DefaultListModel;
 import javax.swing.SwingUtilities;
 
-public class OOPOnlineShopping {
+public class Oopmain {
 
     public static void main(String[] args) {
         DatabaseManager.initializeDatabase();

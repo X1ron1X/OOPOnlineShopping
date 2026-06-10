@@ -19,8 +19,10 @@ public class Header extends JFrame implements ActionListener{
     private JButton btnhome,btnsearch,btnsettings,btnorders,btncart;
     private JTextField searchBar;
     private JPanel header;
+    private int userId;
     
-    Header(){
+    public Header(int userId) {
+        this.userId = userId;
         setSize(1010,500);
         setTitle("Header");
         setLayout(null);

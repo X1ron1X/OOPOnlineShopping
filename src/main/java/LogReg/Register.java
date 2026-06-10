@@ -1,15 +1,17 @@
+package LogReg;
+
+import Dbcon.DBConnection;
 import javax.swing.*;
 import java.awt.*;
-import java.util.HashSet;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class Register extends JPanel {
 
     private JTextField txtFirstName, txtMiddleName, txtLastName;
     private JTextField txtUsername, txtEmail, txtMobile;
     private JPasswordField txtPassword, txtConfirmPassword;
-
-
-    private static HashSet<String> usernames = new HashSet<>();
 
     public Register(MainFrame frame) {
 
@@ -63,6 +65,10 @@ public class Register extends JPanel {
             "Jan","Feb","Mar","Apr","May","Jun",
             "Jul","Aug","Sep","Oct","Nov","Dec"
         };
+        
+        String[] gen = {
+            "Male", "Female", "Other"
+        };
 
         String[] days = new String[31];
         for (int i = 0; i < 31; i++) {
@@ -78,28 +84,33 @@ public class Register extends JPanel {
         JComboBox<String> cmbMonth = new JComboBox<>(months);
         JComboBox<String> cmbDay = new JComboBox<>(days);
         JComboBox<String> cmbYear = new JComboBox<>(years);
+        JComboBox<String> cmbgen = new JComboBox<>(gen);
 
         cmbMonth.setBounds(50, 320, 100, 30);
         cmbDay.setBounds(160, 320, 60, 30);
         cmbYear.setBounds(230, 320, 120, 30);
+        
+        JLabel lblgen = new JLabel("Gender");
+        lblgen.setBounds(50, 360, 200, 20);
+        cmbgen.setBounds(50, 380, 300, 30);
 
         JLabel lblPass = new JLabel("Password");
-        lblPass.setBounds(50, 360, 200, 20);
+        lblPass.setBounds(50, 420, 200, 20);
 
         txtPassword = new JPasswordField();
-        txtPassword.setBounds(50, 380, 300, 30);
+        txtPassword.setBounds(50, 440, 300, 30);
 
         JLabel lblConfirm = new JLabel("Confirm Password");
-        lblConfirm.setBounds(50, 420, 200, 20);
+        lblConfirm.setBounds(50, 480, 200, 20);
 
         txtConfirmPassword = new JPasswordField();
-        txtConfirmPassword.setBounds(50, 440, 300, 30);
+        txtConfirmPassword.setBounds(50, 500, 300, 30);
 
         JButton btnCreate = new JButton("CREATE ACCOUNT");
-        btnCreate.setBounds(100, 500, 200, 35);
+        btnCreate.setBounds(100, 550, 200, 35);
 
         JButton btnLogin = new JButton("LOGIN");
-        btnLogin.setBounds(100, 550, 200, 35);
+        btnLogin.setBounds(100, 600, 200, 35);  
 
         btnCreate.addActionListener(e -> {
 
@@ -109,6 +120,7 @@ public class Register extends JPanel {
             String username = txtUsername.getText().trim();
             String email = txtEmail.getText().trim();
             String mobile = txtMobile.getText().trim();
+            String gender = cmbgen.getSelectedItem().toString();
 
             String password = new String(txtPassword.getPassword());
             String confirmPassword =
@@ -124,59 +136,114 @@ public class Register extends JPanel {
 
                 JOptionPane.showMessageDialog(
                         this,
-                        "Please fill in all required fields."
-                ,"Error!!!", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            if (usernames.contains(username)) {
-                JOptionPane.showMessageDialog(
-                        this,
-                        "Username already exists!"
-                ,"Error!!!", JOptionPane.ERROR_MESSAGE);
+                        "Please fill in all required fields.",
+                        "Error!!!",
+                        JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
             if (!password.equals(confirmPassword)) {
                 JOptionPane.showMessageDialog(
                         this,
-                        "Passwords do not match!"
-                , "", JOptionPane.ERROR_MESSAGE);
+                        "Passwords do not match!",
+                        "Error!!!",
+                        JOptionPane.ERROR_MESSAGE);
                 return;
             }
-
-            usernames.add(username);
 
             String birthdate =
                     cmbMonth.getSelectedItem() + " " +
                     cmbDay.getSelectedItem() + ", " +
                     cmbYear.getSelectedItem();
 
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Account created successfully!"
-            );
-
-
-            System.out.println("===== NEW ACCOUNT =====");
-            System.out.println("Name: " +
+            String fullName =
                     firstName + " " +
                     middleName + " " +
-                    lastName);
-            System.out.println("Username: " + username);
-            System.out.println("Email: " + email);
-            System.out.println("Mobile: " + mobile);
-            System.out.println("Birthdate: " + birthdate);
-            System.out.println("=======================");
+                    lastName;
 
-            txtFirstName.setText("");
-            txtMiddleName.setText("");
-            txtLastName.setText("");
-            txtUsername.setText("");
-            txtEmail.setText("");
-            txtMobile.setText("");
-            txtPassword.setText("");
-            txtConfirmPassword.setText("");
+            try (
+                Connection conn = DBConnection.getConnection();
+                PreparedStatement checkUser =
+                        conn.prepareStatement(
+                                "SELECT username FROM users WHERE username=?")
+            ) {
+
+                checkUser.setString(1, username);
+
+                ResultSet rs = checkUser.executeQuery();
+
+                if (rs.next()) {
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "Username already exists!",
+                            "Error!!!",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                    return;
+                }
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Database Error: " + ex.getMessage()
+                );
+                return;
+            }
+
+            try (
+                Connection conn = DBConnection.getConnection();
+                PreparedStatement pst = conn.prepareStatement(
+                        "INSERT INTO users " +
+                        "(username, fname, email, password, pnum, gender, bdates) " +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?)")
+            ) {
+
+                pst.setString(1, username);
+                pst.setString(2, fullName);
+                pst.setString(3, email);
+                pst.setString(4, password);
+                pst.setString(5, mobile);
+                pst.setString(6, gender);
+                pst.setString(7, birthdate);
+
+                int rows = pst.executeUpdate();
+
+                if (rows > 0) {
+
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "Account created successfully!"
+                    );
+
+                    System.out.println("===== NEW ACCOUNT =====");
+                    System.out.println("Name: " + fullName);
+                    System.out.println("Username: " + username);
+                    System.out.println("Email: " + email);
+                    System.out.println("Mobile: " + mobile);
+                    System.out.println("Birthdate: " + birthdate);
+                    System.out.println("=======================");
+
+                    txtFirstName.setText("");
+                    txtMiddleName.setText("");
+                    txtLastName.setText("");
+                    txtUsername.setText("");
+                    txtEmail.setText("");
+                    txtMobile.setText("");
+                    txtPassword.setText("");
+                    txtConfirmPassword.setText("");
+                    cmbgen.setSelectedIndex(0);
+                }
+
+            } catch (Exception ex) {
+
+                ex.printStackTrace();
+
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Database Error: " + ex.getMessage()
+                );
+            }
         });
 
         btnLogin.addActionListener(e -> frame.showLogin());
@@ -205,6 +272,9 @@ public class Register extends JPanel {
         add(cmbMonth);
         add(cmbDay);
         add(cmbYear);
+        
+        add(lblgen);
+        add(cmbgen);
 
         add(lblPass);
         add(txtPassword);

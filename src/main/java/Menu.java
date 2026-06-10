@@ -1,3 +1,5 @@
+import LogReg.MainFrame;
+import LogReg.Account;
 import javax.swing.SwingUtilities;
 
 public class Menu {

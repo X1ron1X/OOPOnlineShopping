@@ -80,8 +80,8 @@ public class Cart extends JFrame implements ActionListener{
         }
         else if(e.getSource() == btnhome){
         dispose();
-        Header h = new Header();
-        h.setVisible(true);
+        //Header h = new Header();
+        //h.setVisible(true);
         }
         }
     }

@@ -1,3 +1,6 @@
+package LogReg;
+
+import LogReg.Login;
 import javax.swing.*;
 
 public class MainFrame extends JFrame {

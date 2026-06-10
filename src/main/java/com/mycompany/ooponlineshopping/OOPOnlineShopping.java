@@ -44,6 +44,6 @@ public class OOPOnlineShopping {
 
             adminWindow.setVisible(true);
             customerWindow.setVisible(true);
-        });
-    }
-}
+        }); 
+    } 
+} 

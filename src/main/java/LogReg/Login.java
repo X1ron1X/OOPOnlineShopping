@@ -25,7 +25,7 @@ public class Login extends JPanel {
         header.setBackground(Color.BLACK);
         header.setBounds(0,0,450,70);
 
-        JLabel logo = new JLabel("🐝 BumbleBee Shop");
+        JLabel logo = new JLabel("🐝 Basta Shop");
         logo.setForeground(new Color(255,193,7));
         logo.setFont(new Font("Arial",Font.BOLD,24));
         logo.setBounds(75,18,300,30);
@@ -270,7 +270,7 @@ public class Login extends JPanel {
         footer.setBackground(Color.BLACK);
         footer.setBounds(0,560,450,35);
 
-        JLabel foot = new JLabel("© BumbleBee Online Shopping");
+        JLabel foot = new JLabel("© Basta Online Shopping");
         foot.setForeground(new Color(255,193,7));
         foot.setFont(new Font("Arial",Font.BOLD,12));
 

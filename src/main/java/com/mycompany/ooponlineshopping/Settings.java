@@ -79,9 +79,9 @@ public class Settings extends JFrame implements ActionListener{
         o.setVisible(true);
         }
          else if(e.getSource() == btncart){
-        dispose();
-        Cart c = new Cart();
-        c.setVisible(true);
+//        dispose();
+//        Cart c = new Cart();
+//        c.setVisible(true);
         }
     }
     

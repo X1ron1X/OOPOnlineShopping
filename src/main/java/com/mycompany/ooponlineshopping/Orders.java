@@ -79,9 +79,9 @@ public class Orders extends JFrame implements ActionListener{
         h.setVisible(true);
         }
          else if(e.getSource() == btncart){
-        dispose();
-        Cart c = new Cart();
-        c.setVisible(true);
+//        dispose();
+//        Cart c = new Cart();
+//        c.setVisible(true);
         }
     }
     

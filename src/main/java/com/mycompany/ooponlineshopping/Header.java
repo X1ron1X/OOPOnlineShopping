@@ -1,6 +1,9 @@
 package com.mycompany.ooponlineshopping;
 
 
+import com.mycompany.AddToCart.AddToCart;
+import com.mycompany.AddToCart.Product;
+import com.mycompany.AddToCart.checkout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,13 +22,14 @@ public class Header extends JFrame implements ActionListener{
     private JButton btnhome,btnsearch,btnsettings,btnorders,btncart;
     private JTextField searchBar;
     private JPanel header;
+    private AddToCart cartPanel;
     
     Header(){
-        setSize(1010,500);
+        setSize(1010,600);
         setTitle("Header");
         setLayout(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
+           cartPanel = new AddToCart();
         
         btnhome = new JButton("Home");
         btnhome.setBounds(50,10,100,30);
@@ -64,6 +68,10 @@ public class Header extends JFrame implements ActionListener{
         btnsettings.addActionListener(this);
         btnorders.addActionListener(this);
         btncart.addActionListener(this);
+        
+        Product p = new Product(cartPanel);
+        p.setBounds(0,60,400,300);
+        add(p);
     }
 
     @Override
@@ -80,8 +88,15 @@ public class Header extends JFrame implements ActionListener{
         }
          else if(e.getSource() == btncart){
         dispose();
-        Cart c = new Cart();
+        Cart c = new Cart(cartPanel);
         c.setVisible(true);
+//        cartFrame = new JPanel();
+//        cartFrame.setSize(1000,600);
+//        cartFrame.setLayout(null);
+//        cartPanel.setBounds(0,0,1000,500);
+//        cartFrame.add(cartPanel);
+//        cartFrame.setVisible(true);
+
         }
     }
     

@@ -1,17 +1,21 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package com.mycompany.ooponlineshopping.Homepage;
 
-/**
- *
- * @author DE TORRES
- */
+package Home;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
+import com.mycompany.ooponlineshopping.Cart;
+import com.mycompany.ooponlineshopping.Orders;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
+
 
 public class cart1 extends JFrame implements ActionListener {
 
@@ -126,8 +130,8 @@ public void actionPerformed(ActionEvent e) {
         
         JOptionPane.showMessageDialog(this,"Added to Cart!\n\n"+ "Product: " + productName.getText()+ "\nQuantity: " + quantity+ "\nTotal: ₱" + (quantity * productPriceValue));
 
-        // AddToCart at = new AddToCart();
-        // at.setVisible(true);
+        
+        
 
 
     }
@@ -136,8 +140,10 @@ public void actionPerformed(ActionEvent e) {
         
         JOptionPane.showMessageDialog( this, "Proceeding to Checkout\n\n" + "Product: " + productName.getText() + "\nQuantity: " + quantity+ "\nTotal: ₱" + (quantity * productPriceValue));
 
-        //checkout co = new checkout();
-        // co.setVisible(true);
+        
+       
+       
+        
     }
 }
 }

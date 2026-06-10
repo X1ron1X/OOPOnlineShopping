@@ -1,44 +1,30 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package com.mycompany.ooponlineshopping.Homepage;
 
-/**
- *
- * @author DE TORRES
- */
+package Home;
 
 
 
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.*;
-import java.util.ArrayList;
 
-public class homeAdmin extends JFrame implements ActionListener {
 
-    ArrayList<Product> products = new ArrayList<>();
+public class homepage extends JFrame implements ActionListener {
+
     public JLabel title, categories,productImage,productName,productPrice,productImage2,productName2,productPrice2, productImage3, productName3, productPrice3;
     public JButton btnAddItem,searchBtn,btnAdd,btnPlace,btnPay,btnOrder,btnCardAdd,btnCardAdd2,btnCardAdd3;
     public JPanel color;
     public JComboBox<String> btnBox;
     public JPanel card1, card2,card3;
     public ImageIcon productIcon, productIcon2,productIcon3;
-    public int nextX = 100;
-    public int nextY = 600;
     public JPanel mainPanel;
     public JScrollPane scroll;
     
@@ -46,7 +32,7 @@ public class homeAdmin extends JFrame implements ActionListener {
 
 
 
-    homeAdmin(){
+    homepage(){
 
     
 
@@ -184,13 +170,6 @@ public class homeAdmin extends JFrame implements ActionListener {
             searchBtn.addActionListener(this);
             color.add(searchBtn);
 
-            btnAddItem = new JButton("Add Item");
-            btnAddItem.setBounds(800, 750, 100, 40);
-            btnAddItem.addActionListener(this);
-            mainPanel.add(btnAddItem);
-            
-
-
             categories = new JLabel("Products");
             categories.setBounds(170, 170, 150, 50);
             categories.setFont(new Font("Arial", Font.BOLD, 24));
@@ -207,132 +186,52 @@ public class homeAdmin extends JFrame implements ActionListener {
     }
 
 
-
-
-    
-    public void createProductCard(String name, String desc,
-                              String price, String imagePath,
-                              int quantity) {
-
-    JPanel newCard = new JPanel();
-    newCard.setLayout(null);
-    newCard.setBounds(nextX, nextY, 250, 320);
-    newCard.setBorder(
-            BorderFactory.createLineBorder(Color.GRAY));
-
-    ImageIcon icon = new ImageIcon(imagePath);
-    JLabel img = new JLabel(icon);
-    img.setBounds(25, 10, 200, 150);
-    newCard.add(img);
-
-    JLabel pname = new JLabel(name);
-    pname.setBounds(40, 170, 170, 25);
-    pname.setFont(new Font("Arial",
-            Font.BOLD, 16));
-    newCard.add(pname);
-
-    JLabel pprice = new JLabel("₱" + price);
-    pprice.setBounds(80, 195, 100, 25);
-    pprice.setForeground(Color.RED);
-    pprice.setFont(new Font("Arial",
-            Font.BOLD, 18));
-    newCard.add(pprice);
-
-    JLabel qty = new JLabel("Stock: " + quantity);
-    qty.setBounds(75, 220, 100, 25);
-    newCard.add(qty);
-
-    JButton select = new JButton("Select");
-    select.setBounds(50, 260, 150, 30);
-
-    
-    
-    
-    
-    select.addActionListener(new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-
-            cart1 c = new cart1(name,desc,"₱" + price,imagePath);
-
-            c.setVisible(true);
-        }
-    });
-
-    newCard.add(select);
-    mainPanel.add(newCard);
-    
-    nextX += 300;
-    if(nextX > 900){
-        nextX = 100;
-        nextY += 350;
-    }
-
-    mainPanel.repaint();
-    mainPanel.revalidate();
-  
-}
-
-
-  
-    
-    
-    
-    
-    
     @Override
 public void actionPerformed(ActionEvent e) {
+
     if(e.getSource() == btnCardAdd){
-    cart1 c = new cart1(
-        "Gaming Mouse",
-        "RGB Gaming Mouse with 7 programmable buttons.",
-        "₱599",
-        "regreg.jpeg"
-    );
-    c.setVisible(true);
-}
 
-else if(e.getSource() == btnCardAdd2){
-    cart1 c = new cart1(
-        "Wireless Keyboard",
-        "Mechanical wireless keyboard with RGB lighting.",
-        "₱899",
-        "regreg.jpeg"
-    );
-    c.setVisible(true);
-}
+        dispose();
 
-else if(e.getSource() == btnCardAdd3){
-    cart1 c = new cart1(
-        "Gaming Headset",
-        "Surround sound gaming headset with noise cancellation.",
-        "₱1299",
-        "headset.jpeg"
-    );
-    c.setVisible(true);
+        cart1 c = new cart1(
+            "Gaming Mouse",
+            "RGB Gaming Mouse with 7 programmable buttons.",
+            "₱599",
+            "regreg.jpeg"
+        );
 
+        c.setVisible(true);
+    }
 
-}   else if(e.getSource() == btnAddItem){
+    else if(e.getSource() == btnCardAdd2){
 
-    String name = JOptionPane.showInputDialog("Enter Product Name:");
+        dispose();
 
-    String desc = JOptionPane.showInputDialog("Enter Description:");
+        cart1 c = new cart1(
+            "Wireless Keyboard",
+            "Mechanical wireless keyboard with RGB lighting.",
+            "₱899",
+            "regreg.jpeg"
+        );
 
-    String price = JOptionPane.showInputDialog("Enter Price:");
+        c.setVisible(true);
+    }
 
-    String quantity = JOptionPane.showInputDialog("Enter Quantity:");
+    else if(e.getSource() == btnCardAdd3){
 
-    String image = JOptionPane.showInputDialog("Enter Image File Name:\nExample: headset.jpeg");
+        dispose();
 
-    Product p = new Product(name,desc,price,image,Integer.parseInt(quantity));
-    products.add(p);
+        cart1 c = new cart1(
+            "Gaming Headset",
+            "Surround sound gaming headset with noise cancellation.",
+            "₱1299",
+            "headset.jpeg"
+        );
 
-    createProductCard(name,desc,price,image,Integer.parseInt(quantity));
-}
-
-    
-
-    setVisible(true);
+        c.setVisible(true);
+    }
 }
 }
+
 
 

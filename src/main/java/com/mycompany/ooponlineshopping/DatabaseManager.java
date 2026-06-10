@@ -7,7 +7,7 @@ public class DatabaseManager {
 
     private static final String DB_URL = "jdbc:sqlserver://localhost;"
             + "instanceName=MSSQLLocalDB;"
-            + "databaseName=master;"
+            + "databaseName=master;" 
             + "integratedSecurity=true;"
             + "encrypt=true;"
             + "trustServerCertificate=true;";
@@ -17,26 +17,20 @@ public class DatabaseManager {
     }
 
     public static void initializeDatabase() {
+        String createTableSQL = "IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[orders]') AND type in (N'U')) "
+                + "BEGIN "
+                + "CREATE TABLE orders ("
+                + "id INT IDENTITY(1,1) PRIMARY KEY, "
+                + "product_name VARCHAR(255) NOT NULL, "
+                + "price DECIMAL(10,2) NOT NULL, "
+                + "quantity INT NOT NULL, "
+                + "status VARCHAR(50) NOT NULL"
+                + ");"
+                + "END";
+        
         try (Connection conn = getConnection(); 
              Statement stmt = conn.createStatement()) {
-            
-            stmt.execute("IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'OOPOnlineShopping') "
-                    + "CREATE DATABASE OOPOnlineShopping;");
-            
-            stmt.execute("USE OOPOnlineShopping;");
-            
-            String createTableSQL = "IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[orders]') AND type in (N'U')) "
-                    + "BEGIN "
-                    + "CREATE TABLE orders ("
-                    + "id INT IDENTITY(1,1) PRIMARY KEY, "
-                    + "product_name VARCHAR(255) NOT NULL, "
-                    + "price DECIMAL(10,2) NOT NULL, "
-                    + "quantity INT NOT NULL, "
-                    + "status VARCHAR(50) NOT NULL"
-                    + ");"
-                    + "END";
             stmt.execute(createTableSQL);
-            
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -44,7 +38,7 @@ public class DatabaseManager {
 
     public static void loadOrdersByStatus(String status, DefaultListModel<String> model) {
         model.clear();
-        String query = "USE OOPOnlineShopping; SELECT id, product_name, price, quantity FROM orders WHERE status = ?;";
+        String query = "SELECT id, product_name, price, quantity FROM orders WHERE status = ?;";
         
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
@@ -72,7 +66,7 @@ public class DatabaseManager {
             String idPart = orderText.split("\\|")[0].replace("ID:", "").trim();
             int orderId = Integer.parseInt(idPart);
 
-            String query = "USE OOPOnlineShopping; UPDATE orders SET status = ? WHERE id = ?;";
+            String query = "UPDATE orders SET status = ? WHERE id = ?;";
             try (Connection conn = getConnection();
                  PreparedStatement pstmt = conn.prepareStatement(query)) {
                 

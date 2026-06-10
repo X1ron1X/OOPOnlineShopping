@@ -21,7 +21,7 @@ public class Header extends JFrame implements ActionListener{
     private JPanel header;
     private int userId;
     
-    Header(int userId) {
+    public Header(int userId) {
         this.userId = userId;
         setSize(1010,500);
         setTitle("Header");
@@ -77,12 +77,12 @@ public class Header extends JFrame implements ActionListener{
         }
          else if(e.getSource() == btnorders){
         dispose();
-        Orders o = new Orders();
+        Orders o = new Orders(userId);
         o.setVisible(true);
         }
          else if(e.getSource() == btncart){
         dispose();
-        Cart c = new Cart();
+        Cart c = new Cart(userId);
         c.setVisible(true);
         }
     }

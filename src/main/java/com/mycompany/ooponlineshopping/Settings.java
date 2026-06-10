@@ -88,10 +88,10 @@ public class Settings extends JFrame implements ActionListener {
             new Header(userId).setVisible(true);
         }else if (e.getSource() == btnorders) {
             dispose();
-            new Orders().setVisible(true);
+            new Orders(userId).setVisible(true);
         }else if (e.getSource() == btncart) {
             dispose();
-            new Cart().setVisible(true);
+            new Cart(userId).setVisible(true);
         }
     }
 }

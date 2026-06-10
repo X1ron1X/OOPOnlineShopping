@@ -7,7 +7,7 @@ public class MainFrame extends JFrame {
 
     public MainFrame() {
         setTitle("Login System");
-        setSize(450, 650);
+        setSize(1050, 850);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 

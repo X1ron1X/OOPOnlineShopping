@@ -24,8 +24,9 @@ public class cart1 extends JFrame implements ActionListener {
     public JButton plusBtn, minusBtn;
     public int quantity = 1;
     public int productPriceValue;
+    private int userId;
 
-    public cart1(String name, String desc, String productPrice, String imagePath) {
+    public cart1(int userId, String name, String desc, String productPrice, String imagePath) {
 
         
         
@@ -102,6 +103,7 @@ public class cart1 extends JFrame implements ActionListener {
         buynowbtn.addActionListener(this);
         add(buynowbtn);
 
+        this.userId = userId;
         
         setVisible(true);
     }
@@ -130,7 +132,8 @@ public void actionPerformed(ActionEvent e) {
         
         JOptionPane.showMessageDialog(this,"Added to Cart!\n\n"+ "Product: " + productName.getText()+ "\nQuantity: " + quantity+ "\nTotal: ₱" + (quantity * productPriceValue));
 
-        
+        Cart c = new Cart(userId);
+        c.setVisible(true);
         
 
 
@@ -141,7 +144,8 @@ public void actionPerformed(ActionEvent e) {
         JOptionPane.showMessageDialog( this, "Proceeding to Checkout\n\n" + "Product: " + productName.getText() + "\nQuantity: " + quantity+ "\nTotal: ₱" + (quantity * productPriceValue));
 
         
-       
+       Orders o = new Orders(userId);
+       o.setVisible(true);
        
         
     }

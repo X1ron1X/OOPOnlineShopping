@@ -15,33 +15,38 @@ public class ProductDAO {
 
     public void insertProduct(Home.Product p){
 
-        try{
+    try{
 
-            Connection con =
-                    DBConnection.getConnection();
+        Connection con = DBConnection.getConnection();
 
-            String sql =
-            "INSERT INTO products(product_name,description,price,quantity,image_path) VALUES(?,?,?,?,?)";
-
-            PreparedStatement pst =
-                    con.prepareStatement(sql);
-
-            pst.setString(1,p.name);
-            pst.setString(2,p.description);
-            pst.setDouble(3,p.price);
-            pst.setInt(4,p.quantity);
-            pst.setString(5,p.imagePath);
-
-            pst.executeUpdate();
-
-            pst.close();
-            con.close();
-
-        }catch(Exception e){
-            e.printStackTrace();
+        if (con == null) {
+            System.out.println("CONNECTION IS NULL!");
+            return;
         }
 
+        String sql =
+        "INSERT INTO products(product_name, description, price, quantity, image_path) VALUES(?,?,?,?,?)";
+
+        PreparedStatement pst = con.prepareStatement(sql);
+
+        pst.setString(1, p.name);
+        pst.setString(2, p.description);
+        pst.setDouble(3, p.price);
+        pst.setInt(4, p.quantity);
+        pst.setString(5, p.imagePath);
+
+        int rows = pst.executeUpdate();
+
+        System.out.println("INSERT SUCCESS, ROWS: " + rows);
+
+        pst.close();
+        con.close();
+
+    } catch(Exception e){
+        System.out.println("INSERT FAILED:");
+        e.printStackTrace();
     }
+}
     
     
     public void deleteProduct(int productId){

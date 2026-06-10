@@ -19,8 +19,9 @@ public class homeAdmin extends JFrame implements ActionListener {
     public int nextY = 600;
     public JPanel mainPanel;
     public JScrollPane scroll;
+    private int userId;
 
-    homeAdmin() {
+    homeAdmin(int userId) {
         setTitle("ShopBee");
         setSize(1240, 1240);
         setLayout(null);
@@ -63,7 +64,7 @@ public class homeAdmin extends JFrame implements ActionListener {
         color.add(searchBtn);
 
         btnAddItem = new JButton("Add Item");
-        btnAddItem.setBounds(800, 750, 100, 40);
+        btnAddItem.setBounds(1040, 300, 100, 40);
         btnAddItem.addActionListener(this);
         mainPanel.add(btnAddItem);
 
@@ -76,6 +77,8 @@ public class homeAdmin extends JFrame implements ActionListener {
        
         mainPanel.revalidate();
         mainPanel.repaint();
+        
+        this.userId = userId;
     }
 
     private void setupDemoCards() {
@@ -144,7 +147,7 @@ public class homeAdmin extends JFrame implements ActionListener {
         newCard.add(deleteBtn);
 
         select.addActionListener(e -> {
-            cart1 c = new cart1(name, desc, "₱" + price, imagePath);
+            cart1 c = new cart1(userId, name, desc, "₱" + price, imagePath);
             c.setVisible(true);
         });
 
@@ -199,7 +202,7 @@ public class homeAdmin extends JFrame implements ActionListener {
             ProductDAO dao = new ProductDAO();
             dao.insertProduct(p);
 
-            JOptionPane.showMessageDialog(this, "Item Added+0");
+            JOptionPane.showMessageDialog(this, "Item Added");
 
             createProductCard(0, name, desc, price, image, Integer.parseInt(quantity));
         }

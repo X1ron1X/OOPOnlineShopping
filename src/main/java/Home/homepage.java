@@ -27,12 +27,13 @@ public class homepage extends JFrame implements ActionListener {
     public ImageIcon productIcon, productIcon2,productIcon3;
     public JPanel mainPanel;
     public JScrollPane scroll;
+    private int userId;
     
     
 
 
 
-    homepage(){
+    homepage(int userId){
 
     
 
@@ -182,6 +183,7 @@ public class homepage extends JFrame implements ActionListener {
             btnCardAdd3.addActionListener(this);
 
 
+            this.userId = userId;
   
     }
 
@@ -194,6 +196,7 @@ public void actionPerformed(ActionEvent e) {
         dispose();
 
         cart1 c = new cart1(
+                userId,
             "Gaming Mouse",
             "RGB Gaming Mouse with 7 programmable buttons.",
             "₱599",
@@ -208,6 +211,7 @@ public void actionPerformed(ActionEvent e) {
         dispose();
 
         cart1 c = new cart1(
+                userId,
             "Wireless Keyboard",
             "Mechanical wireless keyboard with RGB lighting.",
             "₱899",
@@ -222,6 +226,7 @@ public void actionPerformed(ActionEvent e) {
         dispose();
 
         cart1 c = new cart1(
+                userId,
             "Gaming Headset",
             "Surround sound gaming headset with noise cancellation.",
             "₱1299",

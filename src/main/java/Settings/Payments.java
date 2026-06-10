@@ -9,7 +9,7 @@ import javax.swing.*;
 
 public class Payments extends JPanel implements ActionListener {
 
-    Color PALATINATE = new Color(104, 40, 96);
+    Color PALATINATE = Color.decode("#FFBF00");
 
     JPanel pnlMain, pnlBank, pnlCard, pnlGcash, cardsPanel;
     JScrollPane scroll;
@@ -25,6 +25,9 @@ public class Payments extends JPanel implements ActionListener {
     ArrayList<JPanel> paymentCards = new ArrayList<>();
 
     private int userId;
+    private String selectedType = null;
+    private int selectedPaymentId = -1;
+    private JPanel selectedCard = null;
     int cardY = 20;
 
     public Payments(int userId) {
@@ -60,6 +63,21 @@ public class Payments extends JPanel implements ActionListener {
         addBank.setBounds(80, 600, 400, 50);
         addCard.setBounds(530, 600, 400, 50);
         addGcash.setBounds(980, 600, 400, 50);
+        
+        addBank.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        addBank.setBackground(Color.WHITE);
+        addBank.setForeground(PALATINATE);
+        addBank.setFocusPainted(false);
+        
+        addCard.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        addCard.setBackground(Color.WHITE);
+        addCard.setForeground(PALATINATE);
+        addCard.setFocusPainted(false);
+        
+        addGcash.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        addGcash.setBackground(Color.WHITE);
+        addGcash.setForeground(PALATINATE);
+        addGcash.setFocusPainted(false);
 
         pnlMain.add(addBank);
         pnlMain.add(addCard);
@@ -107,6 +125,14 @@ public class Payments extends JPanel implements ActionListener {
 
         saveBank.setBounds(180, 380, 140, 40);
         cancelBank.setBounds(360, 380, 140, 40);
+        
+        saveBank.setBackground(PALATINATE);
+        saveBank.setForeground(Color.WHITE);
+        saveBank.setFocusPainted(false);
+        
+        cancelBank.setBackground(Color.GRAY);
+        cancelBank.setForeground(Color.WHITE);
+        cancelBank.setFocusPainted(false);
 
         pnlBank.add(saveBank);
         pnlBank.add(cancelBank);
@@ -162,6 +188,14 @@ public class Payments extends JPanel implements ActionListener {
 
         saveCard.setBounds(180, 430, 140, 40);
         cancelCard.setBounds(360, 430, 140, 40);
+        
+        saveCard.setBackground(PALATINATE);
+        saveCard.setForeground(Color.WHITE);
+        saveCard.setFocusPainted(false);
+        
+        cancelCard.setBackground(Color.GRAY);
+        cancelCard.setForeground(Color.WHITE);
+        cancelCard.setFocusPainted(false);
 
         pnlCard.add(saveCard);
         pnlCard.add(cancelCard);
@@ -201,6 +235,15 @@ public class Payments extends JPanel implements ActionListener {
 
         saveGcash.setBounds(180, 330, 140, 40);
         cancelGcash.setBounds(360, 330, 140, 40);
+        
+        
+        saveGcash.setBackground(PALATINATE);
+        saveCard.setForeground(Color.WHITE);
+        saveCard.setFocusPainted(false);
+        
+        cancelGcash.setBackground(Color.GRAY);
+        cancelGcash.setForeground(Color.WHITE);
+        cancelGcash.setFocusPainted(false);
 
         pnlGcash.add(saveGcash);
         pnlGcash.add(cancelGcash);
@@ -247,31 +290,61 @@ public class Payments extends JPanel implements ActionListener {
             pnlMain.setVisible(true);
 
         } else if (e.getSource() == saveBank) {
-
-            PaymentDAO.insertBank(userId,
+            
+            if(selectedCard == null){
+                PaymentDAO.insertBank(userId,
                     bankName1.getText(),
                     accName1.getText(),
                     accNum1.getText());
+            }else{
+                PaymentDAO.updateBank(
+                    selectedPaymentId,
+                    bankName1.getText(),
+                    accName1.getText(),
+                    accNum1.getText()
+            );
+                selectedCard = null;
+            }
 
             loadPayments();
             closePanels();
 
         } else if (e.getSource() == saveCard) {
-
-            PaymentDAO.insertCard(userId,
+            
+            if(selectedCard == null){
+                PaymentDAO.insertCard(userId,
                     cardName1.getText(),
                     cardNum1.getText(),
                     expiry1.getText(),
                     cvv1.getText());
+            }else{
+                PaymentDAO.updateCard(
+                    selectedPaymentId,
+                    cardName1.getText(),
+                    cardNum1.getText(),
+                    expiry1.getText(),
+                    cvv1.getText()
+            );
+            selectedCard = null;
+            }
 
             loadPayments();
             closePanels();
 
         } else if (e.getSource() == saveGcash) {
-
-            PaymentDAO.insertGcash(userId,
+            
+            if(selectedCard == null){
+                PaymentDAO.insertGcash(userId,
                     gcashName1.getText(),
                     gcashNum1.getText());
+            }else{
+                PaymentDAO.updateGcash(
+                    selectedPaymentId,
+                    gcashName1.getText(),
+                    gcashNum1.getText()
+            );
+                selectedCard = null;
+            }
 
             loadPayments();
             closePanels();
@@ -377,9 +450,63 @@ public class Payments extends JPanel implements ActionListener {
         JLabel d = new JLabel(details);
         d.setBounds(320, 50, 500, 25);
         d.setForeground(Color.GRAY);
+        
+        JButton edit = new JButton("Edit");
+        edit.setBounds(980, 30, 100, 35);
+        edit.setBackground(PALATINATE);
+        edit.setForeground(Color.WHITE);
+        edit.setFocusPainted(false);
 
         JButton del = new JButton("Delete");
         del.setBounds(1100, 30, 100, 35);
+        del.setBackground(Color.GRAY);
+        del.setForeground(Color.WHITE);
+        del.setFocusPainted(false);
+        
+        edit.addActionListener(e -> {
+
+            selectedCard = card;
+            selectedPaymentId = id;
+            selectedType = type;
+
+            if(type.equals("BANK")){
+
+                bankName1.setText(name);
+
+                String[] parts = details.split("\\|");
+
+                if(parts.length >= 2){
+                    accName1.setText(parts[0].trim());
+                    accNum1.setText(parts[1].trim());
+                }
+
+                pnlMain.setVisible(false);
+                pnlBank.setVisible(true);
+            }else if(type.equals("CARD")){
+                
+                cardName1.setText(name);
+
+                String[] parts = details.split("\\|");
+
+                if(parts.length >= 3){
+                    cardNum1.setText(parts[0].trim());
+                    expiry1.setText(parts[1].trim());
+                    cvv1.setText(parts[2].trim());
+                }
+
+                pnlMain.setVisible(false);
+                pnlCard.setVisible(true);
+            }else if(type.equals("GCASH")){
+                
+                gcashName1.setText(name);
+
+                gcashNum1.setText(details);
+
+                pnlMain.setVisible(false);
+                pnlGcash.setVisible(true);
+            }
+
+        });
 
         del.addActionListener(e -> {
             deletePayment(type, id);
@@ -390,6 +517,7 @@ public class Payments extends JPanel implements ActionListener {
         card.add(n);
         card.add(d);
         card.add(del);
+        card.add(edit);
 
         cardsPanel.add(card);
         paymentCards.add(card);
@@ -460,5 +588,91 @@ public class Payments extends JPanel implements ActionListener {
                 pst.executeUpdate();
             } catch (Exception e) { e.printStackTrace(); }
         }
+        
+        static void updateBank(
+                
+                int id,
+                String bank,
+                String holder,
+                String number) {
+
+                try {
+
+                    Connection conn = DBConnection.getConnection();
+
+                    PreparedStatement pst =
+                        conn.prepareStatement(
+                            "UPDATE banks SET bname=?, holder=?, bnum=? WHERE bid=?"
+                        );
+
+                    pst.setString(1, bank);
+                    pst.setString(2, holder);
+                    pst.setString(3, number);
+                    pst.setInt(4, id);
+
+                    pst.executeUpdate();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        
+        static void updateCard(
+                int id,
+                String holder,
+                String cnum,
+                String edate,
+                String cvv) {
+
+                try {
+
+                    Connection conn = DBConnection.getConnection();
+
+                    PreparedStatement pst =
+                        conn.prepareStatement(
+                            "UPDATE cards SET holder=?, cnum=?, edate=?, cvv=? WHERE cid=?"
+                        );
+
+                    pst.setString(1, holder);
+                    pst.setString(2, cnum);
+                    pst.setString(3, edate);
+                    pst.setString(4, cvv);
+                    pst.setInt(5, id);
+
+                    pst.executeUpdate();
+
+                    conn.close();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        
+        static void updateGcash(
+                int id,
+                String name,
+                String number) {
+
+                try {
+
+                    Connection conn = DBConnection.getConnection();
+
+                    PreparedStatement pst =
+                        conn.prepareStatement(
+                            "UPDATE gcashs SET name=?, gnum=? WHERE gid=?"
+                        );
+
+                    pst.setString(1, name);
+                    pst.setString(2, number);
+                    pst.setInt(3, id);
+
+                    pst.executeUpdate();
+
+                    conn.close();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
     }
 }

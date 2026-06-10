@@ -23,10 +23,9 @@ public class Settings extends JFrame implements ActionListener {
 
     public Settings(int userId) {
         this.userId = userId;
-        setSize(1565, 800);
+        setSize(1400, 850);
         setTitle("Settings");
         setLayout(null);
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         
@@ -34,8 +33,8 @@ public class Settings extends JFrame implements ActionListener {
         
         header = new JPanel();
         header.setLayout(null);
-        header.setBounds(0, 0, 1565, 60);
-        header.setBackground(Color.decode("#23777B"));
+        header.setBounds(0, 0, 1400, 60);
+        header.setBackground(Color.decode("#FFBF00"));
         add(header);
         
         btnhome = new JButton("Home");

@@ -17,20 +17,20 @@ import javax.swing.*;
 public class accsetting extends JPanel implements ActionListener {
 
     private JButton btnprof, btnacc, btnadd, btnpay, btnlog;
-    private JPanel pnlhead, pnlside, pnlwin;
+    private JPanel pnlside, pnlwin;
     private int userId;
     
     public accsetting(int userId) {
     this.userId = userId;
-        setBounds(0, 50, 1550, 850);
+        setBounds(0, 50, 1300, 850);
         setLayout(null);
         
-        Color PALATINATE = new Color(104, 40, 96);
+        Color PALATINATE = Color.decode("#FFBF00");
         Font navFont = new Font("Segoe UI", Font.BOLD, 18);
         
         pnlside = new JPanel();
         pnlside.setLayout(null);
-        pnlside.setBounds(0, 0, 1600, 60);
+        pnlside.setBounds(0, 0, 1400, 60);
         pnlside.setBackground(PALATINATE);
         add(pnlside);
         
@@ -127,7 +127,7 @@ public class accsetting extends JPanel implements ActionListener {
     public void turnPage(JPanel newPage) {
 
         pnlwin.removeAll();
-        newPage.setBounds(0, 0, 1500, 800);
+        newPage.setBounds(0, 0, 1400, 800);
         pnlwin.add(newPage);
         pnlwin.revalidate();
         pnlwin.repaint();

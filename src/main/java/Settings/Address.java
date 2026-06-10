@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 public class Address extends JPanel implements ActionListener {
     int selectedAddressId = -1;
 
-    Color PALATINATE = new Color(104, 40, 96);
+    Color PALATINATE = Color.decode("#FFBF00");
     JPanel pnlAdd, pnledit, cardsPanel;
     JScrollPane scroll;
     JButton add, save, exit;

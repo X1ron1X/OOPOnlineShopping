@@ -22,7 +22,7 @@ public class ChangePassword extends JPanel implements ActionListener {
         setBackground(new Color(245, 245, 245));
         setBounds(0, 0, 1270, 790);
 
-        Color PALATINATE = new Color(104, 40, 96);
+        Color PALATINATE = Color.decode("#FFBF00");
         Font labelFont = new Font("Segoe UI", Font.BOLD, 16);
 
         title = new JLabel("Change Password");

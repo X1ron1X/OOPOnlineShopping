@@ -22,9 +22,9 @@ public class account extends JPanel implements ActionListener {
         this.userId = userId;
         setLayout(null);
         setBackground(new Color(245, 245, 245));
-        setBounds(0, 0, 1550, 790);
+        setBounds(0, 0, 1400, 800);
 
-        Color PALATINATE = new Color(104, 40, 96);
+        Color PALATINATE = Color.decode("#FFBF00");
         
         sidebar = new JPanel();
         sidebar.setLayout(null);
@@ -42,7 +42,6 @@ public class account extends JPanel implements ActionListener {
         prof.setFocusPainted(false);
         prof.setBorderPainted(false);
         prof.setContentAreaFilled(false);
-        prof.setCursor(new Cursor(Cursor.HAND_CURSOR));
         sidebar.add(prof);
         
         pass = new JButton("Password");
@@ -53,7 +52,6 @@ public class account extends JPanel implements ActionListener {
         pass.setFocusPainted(false);
         pass.setBorderPainted(false);
         pass.setContentAreaFilled(false);
-        pass.setCursor(new Cursor(Cursor.HAND_CURSOR));
         sidebar.add(pass);
         
         acc  = new JButton("Account");
@@ -64,12 +62,11 @@ public class account extends JPanel implements ActionListener {
         acc.setFocusPainted(false);
         acc.setBorderPainted(false);
         acc.setContentAreaFilled(false);
-        acc.setCursor(new Cursor(Cursor.HAND_CURSOR));
         sidebar.add(acc);
         
         content = new JPanel();
         content.setLayout(null);
-        content.setBounds(280, 0, 1270, 790);
+        content.setBounds(180, 0, 1200, 790);
         content.setBackground(Color.WHITE);
         add(content);
 
@@ -100,7 +97,7 @@ public class account extends JPanel implements ActionListener {
     public void turnPage(JPanel newPage) {
 
         content.removeAll();
-        newPage.setBounds(0, 0, 1500, 800);
+        newPage.setBounds(0, 0, 1400, 800);
         content.add(newPage);
         content.revalidate();
         content.repaint();

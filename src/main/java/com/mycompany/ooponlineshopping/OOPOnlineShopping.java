@@ -13,7 +13,9 @@ import LogReg.MainFrame;
 public class OOPOnlineShopping {
 
     public static void main(String[] args) {
-       MainFrame h = new MainFrame();
+       //MainFrame h = new MainFrame();
+       int userId = 1;
+       Settings h = new Settings(userId);
        h.setVisible(true);
     }
 }

@@ -36,7 +36,7 @@ public class DeleteAccount extends JPanel implements ActionListener {
         setBackground(new Color(245,245,245));
         setBounds(0,0,1550,790);
 
-        Color PALATINATE = new Color(104, 40, 96);
+        Color PALATINATE = Color.decode("#FFBF00");
 
         title = new JLabel("Profile");
         title.setBounds(80,30,300,40);

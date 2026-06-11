@@ -1,6 +1,7 @@
 package com.mycompany.ooponlineshopping;
 
 import Settings.accsetting;
+import com.mycompany.AddToCart.AddToCart;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -20,7 +21,7 @@ public class Settings extends JFrame implements ActionListener {
     private JTextField searchBar;
     private JPanel header;
     private int userId;
-
+    private AddToCart cartPanel;
     public Settings(int userId) {
         this.userId = userId;
         setSize(1400, 850);
@@ -81,17 +82,15 @@ public class Settings extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == btnhome){
-        dispose();
-        Header h = new Header();
-        h.setVisible(true);
-        }
-         else if(e.getSource() == btnorders){
-        dispose();
-        Orders o = new Orders();
-        o.setVisible(true);
-        }
-         else if(e.getSource() == btncart){
+         if (e.getSource() == btnhome) {
+            dispose();
+            new Header(userId).setVisible(true);
+        }else if (e.getSource() == btnorders) {
+            dispose();
+            new Orders(userId).setVisible(true);
+        }else if (e.getSource() == btncart) {
+            dispose();
+            new Cart(cartPanel).setVisible(true);
 //        dispose();
 //        Cart c = new Cart();
 //        c.setVisible(true);

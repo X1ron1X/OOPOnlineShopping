@@ -23,8 +23,10 @@ public class Header extends JFrame implements ActionListener{
     private JTextField searchBar;
     private JPanel header;
     private AddToCart cartPanel;
+    private int userId;
     
-   public Header(){
+   public Header(int userId){
+        this.userId = userId;
         setSize(1010,600);
         setTitle("Header");
         setLayout(null);

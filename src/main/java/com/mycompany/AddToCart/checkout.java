@@ -306,7 +306,7 @@ public class checkout extends JFrame implements ActionListener {
                 conn.close();
 
                
-                Header h = new Header();
+                Header h = new Header(userId);
                 h.setVisible(true);
 
             }

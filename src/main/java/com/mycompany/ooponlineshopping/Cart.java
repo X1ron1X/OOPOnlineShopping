@@ -22,7 +22,7 @@ public class Cart extends JFrame implements ActionListener{
     private JPanel header;
     private int userId;
     
-    Cart(AddToCart cartPanel){
+  public Cart(AddToCart cartPanel){
         setSize(1010,600);
         setTitle("Header");
         setLayout(null);

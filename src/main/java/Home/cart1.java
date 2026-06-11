@@ -1,6 +1,7 @@
 
 package Home;
 
+import com.mycompany.AddToCart.AddToCart;
 import com.mycompany.ooponlineshopping.Cart;
 import com.mycompany.ooponlineshopping.Orders;
 import java.awt.Color;
@@ -25,7 +26,7 @@ public class cart1 extends JFrame implements ActionListener {
     public int quantity = 1;
     public int productPriceValue;
     private int userId;
-
+    private AddToCart cartPanel;
     public cart1(int userId, String name, String desc, String productPrice, String imagePath) {
 
         
@@ -132,7 +133,7 @@ public void actionPerformed(ActionEvent e) {
         
         JOptionPane.showMessageDialog(this,"Added to Cart!\n\n"+ "Product: " + productName.getText()+ "\nQuantity: " + quantity+ "\nTotal: ₱" + (quantity * productPriceValue));
 
-        Cart c = new Cart(userId);
+        Cart c = new Cart(cartPanel);
         c.setVisible(true);
         
 

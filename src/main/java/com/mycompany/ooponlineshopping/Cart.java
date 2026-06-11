@@ -20,6 +20,7 @@ public class Cart extends JFrame implements ActionListener{
     private JButton btnhome,btnsearch,btnsettings,btnorders,btncart;
     private JTextField searchBar;
     private JPanel header;
+    private int userId;
     
     Cart(AddToCart cartPanel){
         setSize(1010,600);
@@ -77,17 +78,17 @@ public class Cart extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == btnsettings){
         dispose();
-        Settings s = new Settings();
+        Settings s = new Settings(userId);
         s.setVisible(true);
         }
          else if(e.getSource() == btnorders){
         dispose();
-        Orders o = new Orders();
+        Orders o = new Orders(userId);
         o.setVisible(true);
         }
         else if(e.getSource() == btnhome){
         dispose();
-        Header h = new Header();
+        Header h = new Header(userId);
         h.setVisible(true);
         }
         }

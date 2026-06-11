@@ -1,69 +1,82 @@
 package com.mycompany.ooponlineshopping;
 
-
+import Settings.accsetting;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
 /**
  *
- * @author Khyran Zarsuela
+ * @author Ron
  */
-public class Settings extends JFrame implements ActionListener{
-    private JButton btnhome,btnsearch,btnsettings,btnorders,btncart;
+
+//This is the Jframe of my Setting program
+
+public class Settings extends JFrame implements ActionListener {
+
+    private JButton btnhome, btnsearch, btnsettings, btnorders, btncart;
     private JTextField searchBar;
     private JPanel header;
-    
-    Settings(){
-        setSize(1010,500);
-        setTitle("Header");
+    private int userId;
+
+    public Settings(int userId) {
+        this.userId = userId;
+        setSize(1400, 850);
+        setTitle("Settings");
         setLayout(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
         
-        
-        btnhome = new JButton("Home");
-        btnhome.setBounds(50,10,100,30);
-        add(btnhome);
-        
-        searchBar = new JTextField("Search...");
-        searchBar.setBounds(200,10,300,30);
-        add(searchBar);
-        
-        
-         btnsearch = new JButton("Search");
-        btnsearch.setBounds(500,10,100,30);
-        add(btnsearch);
-        
-         btnsettings = new JButton("Settings");
-        btnsettings.setBounds(630,10,100,30);
-         btnsettings.setForeground(Color.blue);
-        add(btnsettings);
-        
-        btnorders = new JButton("Orders");
-        btnorders.setBounds(760,10,100,30);
-        add(btnorders);
-        
-         btncart = new JButton("Cart");
-        btncart.setBounds(890,10,100,30);
-        add(btncart);
-        
-        
+        Font navFont = new Font("Segoe UI", Font.BOLD, 14);
         
         header = new JPanel();
-        header.setBounds(0,0,1010,50);
-        header.setBackground(Color.decode("#23777B"));
+        header.setLayout(null);
+        header.setBounds(0, 0, 1400, 60);
+        header.setBackground(Color.decode("#FFBF00"));
         add(header);
+        
+        btnhome = new JButton("Home");
+        btnhome.setBounds(30, 15, 100, 30);
+        btnhome.setFont(navFont);
+        header.add(btnhome);
+        
+        searchBar = new JTextField("Search...");
+        searchBar.setBounds(160, 15, 300, 30);
+        header.add(searchBar);
+        
+        btnsearch = new JButton("Search");
+        btnsearch.setBounds(470, 15, 100, 30);
+        btnsearch.setFont(navFont);
+        header.add(btnsearch);
+        
+        btnsettings = new JButton("Settings");
+        btnsettings.setBounds(600, 15, 110, 30);
+        btnsettings.setFont(navFont);
+        btnsettings.setForeground(Color.BLUE);
+        header.add(btnsettings);
+        
+        btnorders = new JButton("Orders");
+        btnorders.setBounds(740, 15, 100, 30);
+        btnorders.setFont(navFont);
+        header.add(btnorders);
+        
+        btncart = new JButton("Cart");
+        btncart.setBounds(870, 15, 100, 30);
+        btncart.setFont(navFont);
+        header.add(btncart);
+        
+        accsetting settingsPanel = new accsetting(userId);
+        settingsPanel.setBounds(0, 60, 1400, 740);
+        add(settingsPanel);
         
         btnhome.addActionListener(this);
         btnsettings.addActionListener(this);
         btnorders.addActionListener(this);
         btncart.addActionListener(this);
+
+        setVisible(true);
     }
 
     @Override
@@ -84,5 +97,4 @@ public class Settings extends JFrame implements ActionListener{
 //        c.setVisible(true);
         }
     }
-    
 }

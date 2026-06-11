@@ -78,12 +78,12 @@ public class Header extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == btnsettings){
         dispose();
-        Settings s = new Settings();
+        Settings s = new Settings(userId);
         s.setVisible(true);
         }
          else if(e.getSource() == btnorders){
         dispose();
-        Orders o = new Orders();
+        Orders o = new Orders(userId);
         o.setVisible(true);
         }
          else if(e.getSource() == btncart){

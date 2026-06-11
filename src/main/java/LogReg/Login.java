@@ -19,14 +19,14 @@ public class Login extends JPanel {
         setLayout(null);
         setBackground(new Color(245, 245, 245));
 
-        // ================= CENTER CARD =================
+        
         JPanel cardPanel = new JPanel(null);
         cardPanel.setBounds(225, 195, 600, 400);
         cardPanel.setBackground(Color.WHITE);
         cardPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
         add(cardPanel);
 
-        // ================= TITLE =================
+      
         JLabel title = new JLabel("LOGIN");
         title.setFont(new Font("Segoe UI", Font.BOLD, 28));
         title.setBounds(260, 30, 200, 40);
@@ -34,7 +34,7 @@ public class Login extends JPanel {
 
         Font labelFont = new Font("Segoe UI", Font.PLAIN, 14);
 
-        // ================= USERNAME =================
+      
         JLabel users = new JLabel("Username");
         users.setFont(labelFont);
         users.setBounds(80, 100, 200, 20);
@@ -42,7 +42,7 @@ public class Login extends JPanel {
         JTextField username = new JTextField();
         username.setBounds(80, 120, 440, 35);
 
-        // ================= PASSWORD =================
+   
         JLabel passw = new JLabel("Password");
         passw.setFont(labelFont);
         passw.setBounds(80, 170, 200, 20);
@@ -50,7 +50,7 @@ public class Login extends JPanel {
         JPasswordField password = new JPasswordField();
         password.setBounds(80, 190, 440, 35);
 
-        // ================= BUTTONS =================
+   
         JButton loginBtn = new JButton("LOGIN");
         loginBtn.setBounds(170, 270, 120, 40);
         loginBtn.setBackground(new Color(255, 191, 0));
@@ -63,7 +63,7 @@ public class Login extends JPanel {
         createBtn.setForeground(Color.WHITE);
         createBtn.setFocusPainted(false);
 
-        // ================= ADD COMPONENTS (ONCE ONLY) =================
+  
         cardPanel.add(title);
 
         cardPanel.add(users);
@@ -75,7 +75,7 @@ public class Login extends JPanel {
         cardPanel.add(loginBtn);
         cardPanel.add(createBtn);
 
-        // ================= LOGIN ACTION =================
+       
         loginBtn.addActionListener(e -> {
 
             String user = username.getText().trim();
@@ -126,7 +126,7 @@ public class Login extends JPanel {
             }
         });
 
-        // ================= SWITCH TO REGISTER =================
+       
         createBtn.addActionListener(e -> frame.showRegister());
     }
 }

@@ -18,14 +18,14 @@ public class Register extends JPanel {
         setLayout(null);
         setBackground(new Color(245, 245, 245));
 
-        // ================= CARD PANEL =================
+       
         JPanel cardPanel = new JPanel(null);
         cardPanel.setBounds(225, 40, 650, 725);
         cardPanel.setBackground(Color.WHITE);
         cardPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
         add(cardPanel);
 
-        // ================= TITLE =================
+   
         JLabel title = new JLabel("CREATE ACCOUNT");
         title.setFont(new Font("Segoe UI", Font.BOLD, 28));
         title.setBounds(220, 20, 300, 40);
@@ -33,7 +33,7 @@ public class Register extends JPanel {
 
         Font labelFont = new Font("Segoe UI", Font.PLAIN, 14);
 
-        // ================= NAME =================
+        
         JLabel lblFirst = new JLabel("First Name");
         lblFirst.setFont(labelFont);
         lblFirst.setBounds(80, 80, 150, 20);
@@ -55,7 +55,7 @@ public class Register extends JPanel {
         txtLastName = new JTextField();
         txtLastName.setBounds(440, 100, 150, 35);
 
-        // ================= USERNAME =================
+     
         JLabel lblUsername = new JLabel("Username");
         lblUsername.setFont(labelFont);
         lblUsername.setBounds(80, 150, 200, 20);
@@ -63,7 +63,7 @@ public class Register extends JPanel {
         txtUsername = new JTextField();
         txtUsername.setBounds(80, 170, 510, 35);
 
-        // ================= EMAIL =================
+        
         JLabel lblEmail = new JLabel("Email");
         lblEmail.setFont(labelFont);
         lblEmail.setBounds(80, 220, 200, 20);
@@ -71,7 +71,7 @@ public class Register extends JPanel {
         txtEmail = new JTextField();
         txtEmail.setBounds(80, 240, 510, 35);
 
-        // ================= MOBILE =================
+        
         JLabel lblMobile = new JLabel("Mobile Number");
         lblMobile.setFont(labelFont);
         lblMobile.setBounds(80, 290, 200, 20);
@@ -79,7 +79,7 @@ public class Register extends JPanel {
         txtMobile = new JTextField();
         txtMobile.setBounds(80, 310, 510, 35);
 
-        // ================= BIRTHDATE =================
+       
         JLabel lblBirth = new JLabel("Birthdate");
         lblBirth.setFont(labelFont);
         lblBirth.setBounds(80, 360, 200, 20);
@@ -108,7 +108,7 @@ public class Register extends JPanel {
         cmbDay.setBounds(210, 380, 80, 35);
         cmbYear.setBounds(300, 380, 120, 35);
 
-        // ================= GENDER =================
+   
         JLabel lblGender = new JLabel("Gender");
         lblGender.setFont(labelFont);
         lblGender.setBounds(80, 430, 200, 20);
@@ -117,7 +117,7 @@ public class Register extends JPanel {
         JComboBox<String> cmbGender = new JComboBox<>(genderList);
         cmbGender.setBounds(80, 450, 510, 35);
 
-        // ================= PASSWORD =================
+       
         JLabel lblPass = new JLabel("Password");
         lblPass.setFont(labelFont);
         lblPass.setBounds(80, 500, 200, 20);
@@ -132,7 +132,7 @@ public class Register extends JPanel {
         txtConfirmPassword = new JPasswordField();
         txtConfirmPassword.setBounds(80, 590, 510, 35);
 
-        // ================= BUTTONS =================
+  
         JButton btnCreate = new JButton("CREATE ACCOUNT");
         btnCreate.setBounds(180, 650, 160, 40);
         btnCreate.setBackground(new Color(255, 191, 0));
@@ -145,7 +145,7 @@ public class Register extends JPanel {
         btnLogin.setForeground(Color.WHITE);
         btnLogin.setFocusPainted(false);
 
-        // ================= ADD COMPONENTS =================
+      
         cardPanel.add(lblFirst);
         cardPanel.add(txtFirstName);
 
@@ -181,191 +181,53 @@ public class Register extends JPanel {
         cardPanel.add(btnCreate);
         cardPanel.add(btnLogin);
 
-        // ================= LOGIN ACTION =================
+       
         btnLogin.addActionListener(e -> frame.showLogin());
 
-        // NOTE: your DB logic stays the same
+       
         btnCreate.addActionListener(e -> {
             String firstName = txtFirstName.getText().trim();
-
-
-
             String middleName = txtMiddleName.getText().trim();
-
-
-
             String lastName = txtLastName.getText().trim();
-
-
-
             String username = txtUsername.getText().trim();
-
-
-
             String email = txtEmail.getText().trim();
-
-
-
             String mobile = txtMobile.getText().trim();
-
-
-
             String gender = cmbGender.getSelectedItem().toString();
-
-
-
-
-
-
-
             String password = new String(txtPassword.getPassword());
-
-
-
-            String confirmPassword =
-
-
-
-                    new String(txtConfirmPassword.getPassword());
-
-
-
-
-
-
-
+            String confirmPassword = new String(txtConfirmPassword.getPassword());
             if (firstName.isEmpty() ||
-
-
-
                 lastName.isEmpty() ||
-
-
-
                 username.isEmpty() ||
-
-
-
                 email.isEmpty() ||
-
-
-
                 mobile.isEmpty() ||
-
-
-
                 password.isEmpty() ||
-
-
-
                 confirmPassword.isEmpty()) {
-
-
-
-
-
-
-
                 JOptionPane.showMessageDialog(
-
-
-
                         this,
-
-
-
                         "Please fill in all required fields.",
-
-
-
                         "Error!!!",
-
-
-
                         JOptionPane.ERROR_MESSAGE);
-
-
-
                 return;
 
 
 
             }
-
-
-
-
-
-
 
             if (!password.equals(confirmPassword)) {
-
-
-
                 JOptionPane.showMessageDialog(
-
-
-
                         this,
-
-
-
                         "Passwords do not match!",
-
-
-
                         "Error!!!",
-
-
-
                         JOptionPane.ERROR_MESSAGE);
-
-
-
                 return;
-
-
-
             }
-
-
-
-
-
-
-
             String birthdate =
-
-
-
                     cmbMonth.getSelectedItem() + " " +
-
-
-
                     cmbDay.getSelectedItem() + ", " +
-
-
-
                     cmbYear.getSelectedItem();
-
-
-
-
-
-
-
             String fullName =
-
-
-
                     firstName + " " +
-
-
-
                     middleName + " " +
-
-
-
                     lastName;
 
 
@@ -375,77 +237,24 @@ public class Register extends JPanel {
 
 
             try (
-
-
-
                 Connection conn = DBConnection.getConnection();
-
-
-
                 PreparedStatement checkUser =
-
-
-
                         conn.prepareStatement(
-
-
-
                                 "SELECT username FROM users WHERE username=?")
 
 
 
             ) {
-
-
-
-
-
-
-
                 checkUser.setString(1, username);
 
-
-
-
-
-
-
                 ResultSet rs = checkUser.executeQuery();
-
-
-
-
-
-
-
                 if (rs.next()) {
-
-
-
                     JOptionPane.showMessageDialog(
-
-
-
-                            this,
-
-
-
+                           this,
                             "Username already exists!",
-
-
-
                             "Error!!!",
-
-
-
                             JOptionPane.ERROR_MESSAGE
-
-
-
                     );
-
-
-
                     return;
 
 

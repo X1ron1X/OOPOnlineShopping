@@ -1,6 +1,7 @@
 package com.mycompany.ooponlineshopping;
 
 
+import com.mycompany.AddToCart.AddToCart;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,9 +22,8 @@ public class Cart extends JFrame implements ActionListener{
     private JPanel header;
     private int userId;
     
-    public Cart(int userId) {
-        this.userId = userId;
-        setSize(1010,500);
+    Cart(AddToCart cartPanel){
+        setSize(1010,600);
         setTitle("Header");
         setLayout(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -66,6 +66,12 @@ public class Cart extends JFrame implements ActionListener{
         btnsettings.addActionListener(this);
         btnorders.addActionListener(this);
         btncart.addActionListener(this);
+        
+//        AddToCart a = new AddToCart();
+//        a.setBounds(0,60,1000,800);
+//        add(a);
+        cartPanel.setBounds(0,60,1000,800);
+        add(cartPanel);
     }
 
     @Override

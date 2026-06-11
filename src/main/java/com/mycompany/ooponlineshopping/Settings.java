@@ -81,16 +81,20 @@ public class Settings extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
-        if (e.getSource() == btnhome) {
-            dispose();
-            new Header(userId).setVisible(true);
-        }else if (e.getSource() == btnorders) {
-            dispose();
-            new Orders(userId).setVisible(true);
-        }else if (e.getSource() == btncart) {
-            dispose();
-            new Cart(userId).setVisible(true);
+        if(e.getSource() == btnhome){
+        dispose();
+        Header h = new Header();
+        h.setVisible(true);
+        }
+         else if(e.getSource() == btnorders){
+        dispose();
+        Orders o = new Orders();
+        o.setVisible(true);
+        }
+         else if(e.getSource() == btncart){
+//        dispose();
+//        Cart c = new Cart();
+//        c.setVisible(true);
         }
     }
 }
